@@ -9,3 +9,7 @@ export interface Routes {
     element: JSX.Element;
   }[];
 }
+
+export interface LayoutDefaultProps {
+  children: JSX.Element | JSX.Element[];
+}
