@@ -1,23 +1,33 @@
-// material ui
-import { Typography, Box } from '@mui/material';
-import { styled } from '@mui/system';
 // styles
 import './App.css';
+// routing
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { PrivateRoutes } from './routes/PrivateRoutes';
+import { protectedRoutes, publicRoutes } from './routes/routes';
+// key generator
+import uniqid from 'uniqid';
 
-const StyledBox = styled(Box)(({ theme }) => ({
-  width: '100%',
-  minHeight: '100vh',
-  backgroundColor: theme.palette.secondary.main,
-}));
-
-const StyledTypography = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.main700,
-}));
-
-export const App = () => {
+export const App: React.FC = () => {
   return (
-    <StyledBox>
-      <StyledTypography variant="h1">Upcomigs</StyledTypography>
-    </StyledBox>
+    <Router>
+      <Routes>
+        <Route element={<PrivateRoutes />}>
+          {protectedRoutes.map((route) => (
+            <Route key={uniqid()} element={route.element} path={route.path}>
+              {route.children?.map((route) => (
+                <Route key={uniqid()} element={route.element} path={route.path} />
+              ))}
+            </Route>
+          ))}
+        </Route>
+        {publicRoutes.map((route) => (
+          <Route key={uniqid()} element={route.element} path={route.path}>
+            {route.children?.map((route) => (
+              <Route key={uniqid()} element={route.element} path={route.path} />
+            ))}
+          </Route>
+        ))}
+      </Routes>
+    </Router>
   );
 };
