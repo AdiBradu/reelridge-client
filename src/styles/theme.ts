@@ -67,6 +67,7 @@ theme.typography.h1 = {
   lineHeight: '56px',
   fontWeight: 400,
   fontFamily: font,
+  textTransform: 'capitalize',
   [theme.breakpoints.up('lg')]: {
     fontSize: '64px',
     lineHeight: '72px',
@@ -112,6 +113,7 @@ theme.typography.caption = {
   fontWeight: 400,
   letterSpacing: '0.6px',
   fontFamily: font,
+  textTransform: 'uppercase',
   [theme.breakpoints.up('lg')]: {
     fontSize: '12px',
     lineHeight: '16px',
