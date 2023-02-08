@@ -13,3 +13,7 @@ export interface Routes {
 export interface LayoutDefaultProps {
   children: JSX.Element | JSX.Element[];
 }
+
+export interface SectionTitleProps {
+  title: string;
+}
