@@ -3,21 +3,24 @@ import { Box, Stack } from '@mui/material';
 import { styled } from '@mui/system';
 // types
 import { LayoutDefaultProps } from '../types/types';
+//components
+import { Navbar } from '../components/Navigation/Navbar/Navbar';
 
-const StyledBox = styled(Box)(({ theme }) => ({
+const StyledStack = styled(Stack)(({ theme }) => ({
   width: '100%',
   minHeight: '100vh',
-  padding: '32px 16px 64px 16px',
+  padding: '0px 16px 64px 16px',
   backgroundColor: theme.palette.secondary.main,
   [theme.breakpoints.up('lg')]: {
-    padding: '64px 128px 128px 128px',
+    padding: '32px 128px 128px 128px',
   },
 }));
 
 export const LayoutDefault: React.FC<LayoutDefaultProps> = ({ children }) => {
   return (
-    <StyledBox>
-      <Stack spacing={{ xs: 4, lg: 8 }}>{children}</Stack>
-    </StyledBox>
+    <Box>
+      <Navbar />
+      <StyledStack spacing={{ xs: 4, lg: 8 }}>{children}</StyledStack>
+    </Box>
   );
 };

@@ -17,3 +17,15 @@ export interface LayoutDefaultProps {
 export interface SectionTitleProps {
   title: string;
 }
+
+export interface MenuProps {
+  toggleDrawer: (
+    isOpen: boolean,
+  ) => React.MouseEventHandler<HTMLButtonElement> | undefined;
+}
+
+export interface MenuItemProps {
+  name: string;
+  icon: JSX.Element;
+  url: string;
+}
