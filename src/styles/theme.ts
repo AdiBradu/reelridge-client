@@ -6,6 +6,7 @@ declare module '@mui/material/styles' {
     main200?: string;
     main600?: string;
     main700?: string;
+    main900?: string;
   }
 
   interface SimplePaletteColorOptions {
@@ -13,6 +14,7 @@ declare module '@mui/material/styles' {
     main200?: string;
     main600?: string;
     main700?: string;
+    main900?: string;
   }
 }
 
@@ -50,6 +52,7 @@ theme.palette.primary.main700 = '#995200';
 
 // secondary color Pitfall
 theme.palette.secondary.main = '#201F24';
+theme.palette.secondary.main900 = '#18181B';
 
 //typography
 theme.typography.h0 = {
@@ -67,6 +70,7 @@ theme.typography.h1 = {
   lineHeight: '56px',
   fontWeight: 400,
   fontFamily: font,
+  textTransform: 'capitalize',
   [theme.breakpoints.up('lg')]: {
     fontSize: '64px',
     lineHeight: '72px',

@@ -9,5 +9,5 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export const SectionTitle: React.FC<SectionTitleProps> = ({ title }) => {
-  return <StyledTypography variant="h2">{title}</StyledTypography>;
+  return <StyledTypography variant="h1">{title}</StyledTypography>;
 };
