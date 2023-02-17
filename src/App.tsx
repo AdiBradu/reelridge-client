@@ -18,19 +18,11 @@ export const App: React.FC = () => {
         <Routes>
           <Route element={<PrivateRoutes />}>
             {protectedRoutes.map((route) => (
-              <Route key={uniqid()} element={route.element} path={route.path}>
-                {route.children?.map((route) => (
-                  <Route key={uniqid()} element={route.element} path={route.path} />
-                ))}
-              </Route>
+              <Route key={uniqid()} element={route.element} path={route.path} />
             ))}
           </Route>
           {publicRoutes.map((route) => (
-            <Route key={uniqid()} element={route.element} path={route.path}>
-              {route.children?.map((route) => (
-                <Route key={uniqid()} element={route.element} path={route.path} />
-              ))}
-            </Route>
+            <Route key={uniqid()} element={route.element} path={route.path} />
           ))}
         </Routes>
       </Router>

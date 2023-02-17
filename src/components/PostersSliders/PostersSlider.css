@@ -31,6 +31,11 @@
   overflow: hidden;
 }
 
+.my-swiper-slide .hovered {
+  transform: translateY(100%);
+  transition: all ease-in-out 0.3s;
+}
+
 .my-swiper-slide:hover {
   opacity: 0.9;
   border-color: rgba(255, 231, 204, 0.7);
@@ -38,5 +43,10 @@
 }
 .my-swiper-slide:hover img {
   scale: 1.1;
+  transition: all ease-in-out 0.3s;
+}
+
+.my-swiper-slide:hover .hovered {
+  transform: translateY(0);
   transition: all ease-in-out 0.3s;
 }

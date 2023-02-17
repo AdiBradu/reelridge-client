@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // components
 import { LayoutDefault } from '../../layouts/LayoutDefault';
 import { SectionTitle } from '../../components/SectionTitle/SectionTitle';
@@ -11,11 +11,13 @@ import { useQuery } from 'react-query';
 import { getUpcomings } from '../../api/features/upcomings';
 // types
 import { UpcomingProps } from '../../types/types';
+// material ui
+import { Typography } from '@mui/material';
+import theme from '../../styles/theme';
 
-export const UpcomingsPage = () => {
+export const UpcomingsPage: React.FC = () => {
   const [movies, setMovies] = useState<UpcomingProps[]>([]);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [activeMovie, setActiveMovie] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
 
   const { isLoading, error, data } = useQuery(['upcomings', pageNumber], () =>
@@ -26,13 +28,8 @@ export const UpcomingsPage = () => {
     data && setMovies([...movies, ...data]);
   }, [data]);
 
-  useEffect(() => {
-    movies.length > 0 && setActiveMovie(movies[activeSlide]);
-  }, [movies]);
-
   const handleActiveSlide = (swiperSlideActiveIndex: number) => {
     setActiveSlide(swiperSlideActiveIndex);
-    setActiveMovie(movies[swiperSlideActiveIndex]);
   };
 
   const handlePageNumber = () => {
@@ -40,7 +37,13 @@ export const UpcomingsPage = () => {
   };
 
   if (isLoading) return <Spinner />;
-  if (error) return 'An error has occurred. Please try again.';
+  {
+    error instanceof Error && (
+      <Typography variant="body1" color={theme.palette.error.light}>
+        {error.message}
+      </Typography>
+    );
+  }
 
   return (
     <LayoutDefault>
@@ -58,7 +61,7 @@ export const UpcomingsPage = () => {
         <Spinner />
       )}
       <PostersSlider
-        data={movies}
+        upcomings={movies}
         handleActiveSlide={handleActiveSlide}
         handlePageNumber={handlePageNumber}
         activeSlide={activeSlide}

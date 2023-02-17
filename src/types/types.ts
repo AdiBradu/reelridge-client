@@ -6,12 +6,7 @@ export interface Routes {
   path: string;
   index?: boolean;
   redirect?: string | undefined;
-  element?: JSX.Element;
-  children?: {
-    index?: boolean;
-    path?: string;
-    element: JSX.Element;
-  }[];
+  element?: JSX.Element | undefined;
 }
 
 export interface LayoutDefaultProps {
@@ -62,12 +57,45 @@ export interface ImagePathsProps {
 }
 
 export interface PostersSliderProps {
-  data: UpcomingProps[] | undefined;
+  upcomings: UpcomingProps[] | undefined;
   handleActiveSlide: (index: number) => void;
   handlePageNumber: () => void;
   activeSlide: number;
+  // activeMovie: UpcomingProps;
 }
 
 export interface StyledTitleBoxProps extends BoxProps {
   trigger?: number | undefined;
+}
+
+export interface UserRegistrationProps {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface UserLoginProps {
+  email: string;
+  password: string;
+}
+
+export interface InputProps {
+  variant: 'outlined' | 'filled' | 'standard' | undefined;
+  label: string;
+  name: string;
+  type: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+}
+
+export interface FormProps {
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  onSubmit: () => void;
+}
+export interface FormRegisterProps extends FormProps {
+  formData: UserRegistrationProps;
+}
+
+export interface FormLoginProps extends FormProps {
+  formData: UserLoginProps;
 }

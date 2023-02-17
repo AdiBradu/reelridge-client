@@ -52,6 +52,7 @@ theme.palette.primary.main700 = '#995200';
 
 // secondary color Pitfall
 theme.palette.secondary.main = '#201F24';
+theme.palette.secondary.main600 = '#615E6E';
 theme.palette.secondary.main900 = '#18181B';
 
 //typography

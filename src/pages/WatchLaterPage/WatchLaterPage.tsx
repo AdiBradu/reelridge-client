@@ -1,5 +1,11 @@
 import React from 'react';
+// components
+import { LayoutDefault } from '../../layouts/LayoutDefault';
 
-export const WatchLaterPage = () => {
-  return <div>WatchLaterPage</div>;
+export const WatchLaterPage: React.FC = () => {
+  return (
+    <LayoutDefault>
+      <></>
+    </LayoutDefault>
+  );
 };

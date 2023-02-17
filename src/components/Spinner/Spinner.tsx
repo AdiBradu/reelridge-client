@@ -23,7 +23,7 @@ const SpinnerItem = styled(CircularProgress)(({ theme }) => ({
 export const Spinner: React.FC = () => {
   return (
     <StyledBox>
-      <Stack spacing={2}>
+      <Stack spacing={2} alignItems={'center'} justifyContent={'center'}>
         <SpinnerItem size={64} />
         <Body text="Loading..." />
       </Stack>

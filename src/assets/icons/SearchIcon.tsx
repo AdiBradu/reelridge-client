@@ -11,16 +11,16 @@ export const SearchIcon: React.FC = () => {
         <path
           d="M10.1486 19.44C15.2801 19.44 19.44 15.2801 19.44 10.1486C19.44 5.01706 15.2801 0.857147 10.1486 0.857147C5.01706 0.857147 0.857147 5.01706 0.857147 10.1486C0.857147 15.2801 5.01706 19.44 10.1486 19.44Z"
           stroke="#FFE7CC"
-          stroke-width="1.71429"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.71429"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M23.1429 23.1429L16.7143 16.7143"
           stroke="#FFE7CC"
-          stroke-width="1.71429"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.71429"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>

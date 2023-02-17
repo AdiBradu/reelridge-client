@@ -10,23 +10,23 @@ export const BackIcon: React.FC = () => {
       <path
         d="M23.1429 12H6"
         stroke="#FFA845"
-        stroke-width="1.71429"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.71429"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12 6L6 12L12 18"
         stroke="#FFA845"
-        stroke-width="1.71429"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.71429"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M0.857147 6V18"
         stroke="#FFA845"
-        stroke-width="1.71429"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.71429"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

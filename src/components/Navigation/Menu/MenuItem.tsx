@@ -3,6 +3,8 @@ import { Button, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/system';
 // types
 import { MenuItemProps } from '../../../types/types';
+// routing
+import { Link } from 'react-router-dom';
 
 const StyledButton = styled(Button)(() => ({
   padding: '0px',
@@ -24,13 +26,15 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 
 export const MenuItem: React.FC<MenuItemProps> = ({ name, icon, url }) => {
   return (
-    <StyledButton href={url}>
-      <StyledStack>
-        <StyledTypography variant="h3" align="left">
-          {name}
-        </StyledTypography>
-        {icon}
-      </StyledStack>
-    </StyledButton>
+    <Link to={url}>
+      <StyledButton>
+        <StyledStack>
+          <StyledTypography variant="h3" align="left">
+            {name}
+          </StyledTypography>
+          {icon}
+        </StyledStack>
+      </StyledButton>
+    </Link>
   );
 };
