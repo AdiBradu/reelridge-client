@@ -1,7 +1,7 @@
 // components
 import { LoginIcon } from '../../../assets/icons/LoginIcon';
 import { SearchIcon } from '../../../assets/icons/SearchIcon';
-import { UpcomingsIcon } from '../../../assets/icons/UpcomingsIcon';
+import { UpcomingIcon } from '../../../assets/icons/UpcomingIcon';
 import { WatchLaterIcon } from '../../../assets/icons/WatchLaterIcon';
 
 export const Links = [
@@ -19,8 +19,8 @@ export const Links = [
   },
   {
     id: 3,
-    name: 'upcomings',
-    icon: <UpcomingsIcon />,
+    name: 'upcoming',
+    icon: <UpcomingIcon />,
     url: '/',
   },
   {

@@ -1,6 +1,6 @@
 // pages
 import { NoPage } from '../pages/404Page/NoPage';
-import { UpcomingsPage } from '../pages/UpcomingsPage/UpcomingsPage';
+import { UpcomingPage } from '../pages/UpcomingPage/UpcomingPage';
 import { WatchLaterPage } from '../pages/WatchLaterPage/WatchLaterPage';
 import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
@@ -25,7 +25,7 @@ export const publicRoutes: Routes[] = [
   {
     path: '/',
     index: true,
-    element: <UpcomingsPage />,
+    element: <UpcomingPage />,
   },
   {
     path: '/register',

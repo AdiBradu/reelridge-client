@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // components
 import { Input } from '../Input/Input';
+import { Spinner } from '../../components/Spinner/Spinner';
 // material ui
 import { Box, Button, Typography, Stack, Link } from '@mui/material';
 import { styled } from '@mui/system';
 import theme from '../../styles/theme';
 // types
-import { FormLoginProps } from '../../types/types';
+import { UserLoginProps } from '../../types/types';
+// redux
+import { useAppDispatch } from '../../api/hooks/hooks';
+import { setLoginUser, setUserName } from '../../api/features/auth/authSlice';
+// routing
+import { useNavigate } from 'react-router-dom';
+// react query
+import { useMutation } from 'react-query';
+// api
+import { loginUser } from '../../api/features/auth';
 
 const StyledForm = styled(Box)(() => ({
   maxWidth: '400px',
@@ -42,11 +52,62 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const FormLogin: React.FC<FormLoginProps> = ({ onSubmit, formData, onChange }) => {
+export const FormLogin: React.FC = () => {
+  console.log('Form Login render');
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<UserLoginProps>({
+    email: '',
+    password: '',
+  });
+
+  const {
+    mutate: loginUserMutation,
+    data,
+    isLoading,
+    error,
+  } = useMutation((formData: UserLoginProps) => loginUser(formData));
+
+  const handleLogin = () => {
+    loginUserMutation(formData);
+  };
+
+  useEffect(() => {
+    data && sessionStorage.setItem('token', data.token);
+    data && sessionStorage.setItem('user', data.id);
+    data && dispatch(setLoginUser());
+    data && dispatch(setUserName(data.username));
+    data &&
+      setTimeout(() => {
+        navigate('/watchlater');
+      }, 1500);
+  }, [data]);
+
+  const handleChangeFormData = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ): void => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  if (isLoading) return <Spinner />;
+
   return (
     <StyledForm>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleLogin}>
         <FormBody>
+          {error instanceof Error && (
+            <Typography variant="body1" color={theme.palette.error.light}>
+              {error.message}
+            </Typography>
+          )}
+          {data && (
+            <Typography variant="body1" color={theme.palette.success.light}>
+              {data.message}
+            </Typography>
+          )}
           <FormBodyInputs>
             <Input
               label="email"
@@ -54,7 +115,7 @@ export const FormLogin: React.FC<FormLoginProps> = ({ onSubmit, formData, onChan
               name="email"
               type="email"
               value={formData.email}
-              onChange={onChange}
+              onChange={handleChangeFormData}
             />
             <Input
               label="password"
@@ -62,7 +123,7 @@ export const FormLogin: React.FC<FormLoginProps> = ({ onSubmit, formData, onChan
               name="password"
               type="password"
               value={formData.password}
-              onChange={onChange}
+              onChange={handleChangeFormData}
             />
           </FormBodyInputs>
           <FormBodyFooter>
@@ -71,7 +132,7 @@ export const FormLogin: React.FC<FormLoginProps> = ({ onSubmit, formData, onChan
             </StyledButton>
             <FormFooterText variant="caption">
               Please{' '}
-              <Link href={'/login'} color={theme.palette.primary.main600}>
+              <Link href={'/register'} color={theme.palette.primary.main600}>
                 sign up
               </Link>{' '}
               if you don't have an account.

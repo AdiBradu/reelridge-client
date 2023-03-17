@@ -12,3 +12,5 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 export const Heading3: React.FC<TextProps> = ({ text }) => {
   return <StyledTypography variant="h3">{text}</StyledTypography>;
 };
+
+export const MemoizedHeading3 = React.memo(Heading3);

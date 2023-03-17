@@ -2,7 +2,7 @@ import axios from 'axios';
 //type
 import { UpcomingProps } from '../../../types/types';
 
-export const getUpcomings = async (
+export const getUpcomingMovies = async (
   pageNumber: number,
 ): Promise<UpcomingProps[] | undefined> => {
   try {

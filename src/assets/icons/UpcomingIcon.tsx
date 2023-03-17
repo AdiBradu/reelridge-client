@@ -1,4 +1,4 @@
-export const UpcomingsIcon: React.FC = () => {
+export const UpcomingIcon: React.FC = () => {
   return (
     <svg
       width="24"
@@ -7,7 +7,7 @@ export const UpcomingsIcon: React.FC = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_81_75)">
+      <g clipPath="url(#clip0_81_75)">
         <path
           d="M6 11.1429C8.84033 11.1429 11.1429 8.84033 11.1429 6C11.1429 3.15968 8.84033 0.857147 6 0.857147C3.15968 0.857147 0.857147 3.15968 0.857147 6C0.857147 8.84033 3.15968 11.1429 6 11.1429Z"
           stroke="#FFE7CC"

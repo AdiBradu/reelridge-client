@@ -2,29 +2,68 @@ import axios from 'axios';
 //type
 import { UpcomingProps } from '../../../types/types';
 
-console.log(sessionStorage.getItem('token'));
-
 export const addToWatchLater = async (
-  title: string,
-  release_date: Date,
-  image_path: string,
-  overview: string,
-  rating: string,
-  votes: string,
+  movie: UpcomingProps,
 ): Promise<UpcomingProps | undefined> => {
   try {
-    const response = await axios.post('http://localhost:5050/movies', {
+    if (movie) {
+      const response = await axios.post(
+        'http://localhost:5050/watchlater',
+        {
+          data: {
+            movie_id: movie.id,
+            title: movie.title,
+            release_date: movie.release_date,
+            image_path: movie.image_path,
+            overview: movie.overview,
+            rating: movie.rating,
+            votes: movie.votes,
+          },
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'http://localhost:5173',
+            Authorization: `token ${sessionStorage.getItem('token')}`,
+          },
+        },
+      );
+      return response.data;
+    }
+  } catch (error) {
+    console.error('My error', error);
+  }
+};
+
+export const removeFromWatchLater = async (
+  movieId: number,
+): Promise<UpcomingProps | undefined> => {
+  try {
+    if (movieId) {
+      const response = await axios.delete(`http://localhost:5050/watchlater`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'http://localhost:5173',
+          Authorization: `token ${sessionStorage.getItem('token')}`,
+        },
+        data: {
+          movieId: movieId,
+        },
+      });
+      return response.data;
+    }
+  } catch (error) {
+    console.error('My error', error);
+  }
+};
+
+export const getWatchlaterMovies = async () => {
+  try {
+    const response = await axios.get(`http://localhost:5050/watchlater`, {
       headers: {
+        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': 'http://localhost:5173',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-      },
-      data: {
-        title: title,
-        release_date: release_date,
-        image_path: image_path,
-        overview: overview,
-        rating: rating,
-        votes: votes,
+        Authorization: `token ${sessionStorage.getItem('token')}`,
       },
     });
     return response.data;

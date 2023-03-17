@@ -21,11 +21,13 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/styles' {
   interface TypographyVariants {
     h0: React.CSSProperties;
+    small: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
     h0?: React.CSSProperties;
+    small?: React.CSSProperties;
   }
 }
 
@@ -33,6 +35,7 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     h0: true;
+    small: true;
   }
 }
 
@@ -119,6 +122,19 @@ theme.typography.caption = {
   letterSpacing: '0.6px',
   fontFamily: font,
   textTransform: 'uppercase',
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '12px',
+    lineHeight: '16px',
+    letterSpacing: '0.75px',
+  },
+};
+
+theme.typography.small = {
+  fontSize: '10px',
+  lineHeight: '16px',
+  fontWeight: 400,
+  letterSpacing: '0.6px',
+  fontFamily: font,
   [theme.breakpoints.up('lg')]: {
     fontSize: '12px',
     lineHeight: '16px',

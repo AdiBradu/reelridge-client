@@ -12,3 +12,5 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 export const Body: React.FC<TextProps> = ({ text }) => {
   return <StyledTypography variant="body1">{text}</StyledTypography>;
 };
+
+export const MemoizedBody = React.memo(Body);

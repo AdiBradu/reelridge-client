@@ -14,7 +14,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   width: '100%',
   height: '100%',
   backgroundColor: theme.palette.secondary.main,
-  padding: '32px 16px',
+  padding: '32px 24px',
 }));
 
 const StyledStack = styled(Stack)(() => ({ gap: '16px' }));
@@ -23,6 +23,7 @@ const StyledButton = styled(Button)(() => ({
   minWidth: '0px',
   padding: '0px',
   justifyContent: 'flex-end',
+  marginBottom: '16px',
 }));
 
 export const Menu: React.FC<MenuProps> = ({ toggleDrawer }) => {

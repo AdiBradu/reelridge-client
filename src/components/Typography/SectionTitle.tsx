@@ -1,3 +1,4 @@
+import React from 'react';
 // material ui
 import { Typography } from '@mui/material';
 import { styled } from '@mui/system';
@@ -9,5 +10,6 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export const SectionTitle: React.FC<SectionTitleProps> = ({ title }) => {
+  console.log('Section Title Render');
   return <StyledTypography variant="h1">{title}</StyledTypography>;
 };

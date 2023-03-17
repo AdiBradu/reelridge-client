@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // components
 import { Input } from '../Input/Input';
+import { Spinner } from '../../components/Spinner/Spinner';
 // material ui
 import { Box, Button, Typography, Stack, Link } from '@mui/material';
 import { styled } from '@mui/system';
 import theme from '../../styles/theme';
 // types
-import { FormRegisterProps } from '../../types/types';
+import { UserRegistrationProps } from '../../types/types';
+// react query
+import { useMutation } from 'react-query';
+// api
+import { registerUser } from '../../api/features/auth';
+// routing
+import { useNavigate } from 'react-router-dom';
 
 const StyledForm = styled(Box)(() => ({
   maxWidth: '400px',
@@ -42,15 +49,56 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const FormRegister: React.FC<FormRegisterProps> = ({
-  onSubmit,
-  formData,
-  onChange,
-}) => {
+export const FormRegister: React.FC = () => {
+  console.log('Form Register render');
+  const [formData, setFormData] = useState<UserRegistrationProps>({
+    username: '',
+    email: '',
+    password: '',
+  });
+
+  const {
+    mutate: registerUserMutation,
+    data,
+    isLoading,
+    error,
+  } = useMutation((formData: UserRegistrationProps) => registerUser(formData));
+
+  const handleregister = () => {
+    registerUserMutation(formData);
+  };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    data && setTimeout(() => navigate('/login'), 3000);
+  }, [data]);
+
+  const handleChangeFormData = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ): void => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  if (isLoading) return <Spinner />;
+
   return (
     <StyledForm>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleregister}>
         <FormBody>
+          {error instanceof Error && (
+            <Typography variant="body1" color={theme.palette.error.light}>
+              {error.message}
+            </Typography>
+          )}
+          {data && (
+            <Typography variant="body1" color={theme.palette.success.light}>
+              {data.message}
+            </Typography>
+          )}
           <FormBodyInputs>
             <Input
               label="username"
@@ -58,7 +106,7 @@ export const FormRegister: React.FC<FormRegisterProps> = ({
               name="username"
               type="text"
               value={formData.username}
-              onChange={onChange}
+              onChange={handleChangeFormData}
             />
             <Input
               label="email"
@@ -66,7 +114,7 @@ export const FormRegister: React.FC<FormRegisterProps> = ({
               name="email"
               type="email"
               value={formData.email}
-              onChange={onChange}
+              onChange={handleChangeFormData}
             />
             <Input
               label="password"
@@ -74,7 +122,7 @@ export const FormRegister: React.FC<FormRegisterProps> = ({
               name="password"
               type="password"
               value={formData.password}
-              onChange={onChange}
+              onChange={handleChangeFormData}
             />
           </FormBodyInputs>
           <FormBodyFooter>

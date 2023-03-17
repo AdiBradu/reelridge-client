@@ -4,8 +4,6 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PrivateRoutes } from './routes/PrivateRoutes';
 import { protectedRoutes, publicRoutes } from './routes/routes';
-// key generator
-import uniqid from 'uniqid';
 // react query
 import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -18,11 +16,11 @@ export const App: React.FC = () => {
         <Routes>
           <Route element={<PrivateRoutes />}>
             {protectedRoutes.map((route) => (
-              <Route key={uniqid()} element={route.element} path={route.path} />
+              <Route key={route.path} element={route.element} path={route.path} />
             ))}
           </Route>
           {publicRoutes.map((route) => (
-            <Route key={uniqid()} element={route.element} path={route.path} />
+            <Route key={route.path} element={route.element} path={route.path} />
           ))}
         </Routes>
       </Router>

@@ -7,7 +7,7 @@ export const LoginIcon: React.FC = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_81_62)">
+      <g clipPath="url(#clip0_81_62)">
         <path
           d="M12 15.4286C14.1302 15.4286 15.8571 13.7017 15.8571 11.5714C15.8571 9.4412 14.1302 7.71429 12 7.71429C9.86975 7.71429 8.14285 9.4412 8.14285 11.5714C8.14285 13.7017 9.86975 15.4286 12 15.4286Z"
           stroke="#FFE7CC"

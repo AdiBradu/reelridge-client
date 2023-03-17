@@ -1,25 +1,19 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
-// id
-import uniqid from 'uniqid';
-// types
-import { PostersSliderProps } from '../../types/types';
 // components
 import { Body } from '../Typography/Body';
-import { Caption } from '../Typography/Caption';
+import { MemoizedSlideActions } from '../SlideActions/SlideActions';
 // material ui
-import { Button, Box, Stack } from '@mui/material';
+import { Button } from '@mui/material';
 import { styled } from '@mui/system';
-import theme from '../../styles/theme';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
-import AddIcon from '@mui/icons-material/Add';
-// api
-import { addToWatchLater } from '../../api/features/watchlater';
-// react query
-import { useQuery } from 'react-query';
+// router
+import { useLocation } from 'react-router-dom';
+// types
+import { UpcomingProps, PostersSliderProps } from '../../types/types';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -56,74 +50,23 @@ const ButtonSliderRight = styled(Button)(({ theme }) => ({
   },
 }));
 
-const ActionsWrapper = styled(Stack)(() => ({
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  justifyContent: 'flex-end',
-  zIndex: '2000',
-}));
-
-const Actions = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  width: '100%',
-  height: '33%',
-  backgroundColor: theme.palette.secondary.main900,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const AddItem = styled(AddIcon)(({ theme }) => ({
-  color: theme.palette.primary.main100,
-}));
-
 export const PostersSlider: React.FC<PostersSliderProps> = ({
-  upcomings,
-  handleActiveSlide,
-  handlePageNumber,
+  movies,
   activeSlide,
+  handleActiveSlide,
+  pageNumber,
+  handlePageNumber,
 }) => {
+  console.log('Posters Slider render');
   const swiperRef = useRef<SwiperCore>();
-  const [activeMovie, setActiveMovie] = useState({
-    title: '',
-    release_date: new Date(),
-    image_path: '',
-    overview: '',
-    rating: '',
-    votes: '',
-  });
-  console.log(activeMovie);
-
-  const { isLoading, error, data, refetch } = useQuery(
-    ['watchlater', activeMovie],
-    () =>
-      addToWatchLater(
-        activeMovie.title,
-        activeMovie.release_date,
-        `${base_url}${poster_size}/${activeMovie.image_path}`,
-        activeMovie.overview,
-        activeMovie.rating,
-        activeMovie.votes,
-      ),
-    {
-      enabled: false,
-    },
-  );
-
-  const handleAddToWatchLater = (index: number) => {
-    upcomings && setActiveMovie(upcomings[index]);
-    refetch();
-    console.log('add to wathc later');
-  };
+  const location = useLocation();
 
   return (
     <Swiper
-      breakpointsBase="window"
       spaceBetween={16}
       className="my-swiper"
       onActiveIndexChange={(swiper) => {
-        handleActiveSlide(swiper.activeIndex);
+        handleActiveSlide?.(swiper.activeIndex);
       }}
       initialSlide={activeSlide}
       onBeforeInit={(swiper) => {
@@ -142,33 +85,50 @@ export const PostersSlider: React.FC<PostersSliderProps> = ({
         },
       }}
     >
-      <ButtonSliderLeft onClick={() => swiperRef.current?.slidePrev()}>
+      <ButtonSliderLeft
+        onClick={() => swiperRef.current?.slidePrev()}
+        aria-label={'Slide left'}
+      >
         <ArrowBackIosNewRoundedIcon />
       </ButtonSliderLeft>
-      <ButtonSliderRight onClick={() => swiperRef.current?.slideNext()}>
+      <ButtonSliderRight
+        onClick={() => swiperRef.current?.slideNext()}
+        aria-label={'Slide right'}
+      >
         <ArrowForwardIosRoundedIcon />
       </ButtonSliderRight>
-      {upcomings?.map((image, index) => (
+      {movies?.map((movie: UpcomingProps, index: number) => (
         <SwiperSlide
-          key={uniqid()}
-          className="my-swiper-slide"
-          onClick={() => handleActiveSlide(index)}
+          key={`${movie.title} ${index}`}
+          className={`my-swiper-slide`}
+          onClick={() => handleActiveSlide?.(index)}
         >
-          <ActionsWrapper className="hovered">
-            <Actions>
-              <Button onClick={() => handleAddToWatchLater(index)}>
-                <AddItem />
-                <Caption text={'add movie'} />
-              </Button>
-            </Actions>
-          </ActionsWrapper>
-
-          <img src={`${base_url}${poster_size}/${image.image_path}`} />
+          {activeSlide === index && (
+            <MemoizedSlideActions
+              movie={movies[activeSlide]}
+              movies={movies}
+              activeSlide={activeSlide}
+            />
+          )}
+          <img
+            src={`${base_url}${poster_size}/${movie.image_path}`}
+            alt={movie.title}
+            width={'100%'}
+            height={'100%'}
+            loading={'lazy'}
+          />
         </SwiperSlide>
       ))}
-      <SwiperSlide className="my-swiper-slide" onClick={handlePageNumber}>
-        <Body text={'Load more'} />
-      </SwiperSlide>
+      {location.pathname !== '/watchlater' && pageNumber && (
+        <SwiperSlide
+          className="my-swiper-slide"
+          onClick={() => handlePageNumber?.(pageNumber)}
+        >
+          <Body text={'Load more'} aria-label={'Load more movies'} />
+        </SwiperSlide>
+      )}
     </Swiper>
   );
 };
+
+export const MemoizedPostersSlider = React.memo(PostersSlider);

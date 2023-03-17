@@ -132,7 +132,6 @@ table {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  /* transition: all ease-in-out 0.3s; */
 }
 html {
   scroll-behavior: smooth;
@@ -140,6 +139,7 @@ html {
 a {
   text-decoration: none;
   color: inherit;
+  display: inline-flex;
 }
 form {
   width: 100%;
@@ -147,16 +147,3 @@ form {
   flex-direction: column;
   gap: 20px;
 }
-/* input::--webkit-autofill {
-  box-shadow: inset 0 0 0 30px #fff !important;
-}
-input::--webkit-autofill:active {
-  box-shadow: inset 0 0 0 30px #fff !important;
-}
-input::-webkit-autofill:focus {
-  box-shadow: inset 0 0 0 30px #fff !important;
-}
-
-input::-webkit-autofill:hover {
-  box-shadow: inset 0 0 0 30px #fff !important;
-} */

@@ -3,16 +3,13 @@ import React from 'react';
 import { Stack, Box } from '@mui/material';
 import { styled } from '@mui/system';
 // components
-import { Heading2 } from '../Typography/Heading2';
-import { Heading3 } from '../Typography/Heading3';
-import { Body } from '../Typography/Body';
+import { MemoizedHeading2 } from '../Typography/Heading2';
+import { MemoizedHeading3 } from '../Typography/Heading3';
+import { MemoizedBody } from '../Typography/Body';
 import { Caption } from '../Typography/Caption';
 // types
-import { UpcomingProps } from '../../types/types';
+import { MovieProps } from '../../types/types';
 import { StyledTitleBoxProps } from '../../types/types';
-// utils
-import { autoScroll } from '../../utils/utils';
-import { AutoScroll } from '../../utils/AutoScroll/AutoScroll';
 
 const StyledStack = styled(Stack)(() => ({
   gap: '32px',
@@ -54,40 +51,35 @@ const StyledOverviewBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const Movie: React.FC<UpcomingProps> = ({
-  id,
-  title,
-  release_date,
-  image_path,
-  overview,
-  rating,
-  votes,
-}) => {
+export const Movie: React.FC<MovieProps> = ({ movies, activeSlide }) => {
+  console.log('Movie Render');
+
   return (
     <StyledStack>
       <Header>
         <StyledTitleBox id={'title'}>
-          <AutoScroll id={'title'} movie={id} />
-          <Heading2 text={title} />
+          <MemoizedHeading2 text={movies[activeSlide]?.title} />
         </StyledTitleBox>
         <HeaderBody>
           <HeaderBodyInfo>
-            <Heading3 text={release_date?.toString()} />
+            <MemoizedHeading3 text={movies[activeSlide]?.release_date?.toString()} />
             <Caption text={'release date'} />
           </HeaderBodyInfo>
           <HeaderBodyInfo>
-            <Heading3 text={rating} />
+            <MemoizedHeading3 text={movies[activeSlide]?.rating} />
             <Caption text={'rating'} />
           </HeaderBodyInfo>
           <HeaderBodyInfo>
-            <Heading3 text={votes} />
+            <MemoizedHeading3 text={movies[activeSlide]?.votes} />
             <Caption text={'votes'} />
           </HeaderBodyInfo>
         </HeaderBody>
       </Header>
       <StyledOverviewBox>
-        <Body text={overview} />
+        <MemoizedBody text={movies[activeSlide]?.overview} />
       </StyledOverviewBox>
     </StyledStack>
   );
 };
+
+export const MemoizedMovie = React.memo(Movie);

@@ -30,13 +30,13 @@ export interface MenuItemProps {
 }
 
 export interface UpcomingProps {
-  id?: number;
-  title?: string;
-  release_date?: Date;
-  image_path?: string;
-  overview?: string;
-  rating?: number;
-  votes?: number;
+  id: number;
+  title?: string | undefined;
+  release_date?: string | undefined;
+  image_path?: string | undefined;
+  overview?: string | undefined;
+  rating?: string | undefined;
+  votes?: string | undefined;
 }
 
 export interface TextProps {
@@ -57,11 +57,16 @@ export interface ImagePathsProps {
 }
 
 export interface PostersSliderProps {
-  upcomings: UpcomingProps[] | undefined;
-  handleActiveSlide: (index: number) => void;
-  handlePageNumber: () => void;
+  movies?: UpcomingProps[];
   activeSlide: number;
-  // activeMovie: UpcomingProps;
+  pageNumber?: number;
+  handleActiveSlide?: (index: number) => void;
+  handlePageNumber?: (number: number) => void;
+}
+
+export interface MovieProps {
+  movies: UpcomingProps[];
+  activeSlide: number;
 }
 
 export interface StyledTitleBoxProps extends BoxProps {
@@ -88,6 +93,10 @@ export interface InputProps {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
 }
 
+export interface FormGroupProps {
+  children: React.ReactNode | React.ReactNode[];
+}
+
 export interface FormProps {
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   onSubmit: () => void;
@@ -98,4 +107,15 @@ export interface FormRegisterProps extends FormProps {
 
 export interface FormLoginProps extends FormProps {
   formData: UserLoginProps;
+}
+
+export interface ButtonAddProps {
+  movies: UpcomingProps[];
+  activeSlide: number;
+}
+
+export interface SlideActionsProps {
+  movie: UpcomingProps;
+  movies: UpcomingProps[];
+  activeSlide: number;
 }

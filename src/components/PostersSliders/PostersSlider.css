@@ -7,8 +7,6 @@
   text-align: center;
   font-size: 18px;
   background: #18181b;
-
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,6 +19,7 @@
   object-fit: cover;
   border: 1px solid transparent;
   border-radius: 8px;
+  transition: all ease-in-out 0.3s;
 }
 
 .my-swiper-slide {
@@ -48,5 +47,16 @@
 
 .my-swiper-slide:hover .hovered {
   transform: translateY(0);
+  transition: all ease-in-out 0.3s;
+}
+
+.focused {
+  opacity: 0.9;
+  border-color: rgba(255, 231, 204, 0.7);
+  transition: all ease-in-out 0.3s;
+}
+
+.focused img {
+  scale: 1.1;
   transition: all ease-in-out 0.3s;
 }

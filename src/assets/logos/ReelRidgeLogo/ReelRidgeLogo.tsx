@@ -8,7 +8,7 @@ const StyledButton = styled(Button)(() => ({
 
 export const ReelRidgeLogo = () => {
   return (
-    <StyledButton>
+    <StyledButton aria-label={'ReelRidge Logo Go Home'}>
       <svg
         width="131"
         height="24"

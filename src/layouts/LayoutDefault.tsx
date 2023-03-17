@@ -1,10 +1,11 @@
+import React from 'react';
 // material ui
 import { Box, Stack } from '@mui/material';
 import { styled } from '@mui/system';
 // types
 import { LayoutDefaultProps } from '../types/types';
 //components
-import { Navbar } from '../components/Navigation/Navbar/Navbar';
+import { MemoizedNavbar } from '../components/Navigation/Navbar/Navbar';
 
 const StyledStack = styled(Stack)(({ theme }) => ({
   width: '100%',
@@ -17,10 +18,11 @@ const StyledStack = styled(Stack)(({ theme }) => ({
 }));
 
 export const LayoutDefault: React.FC<LayoutDefaultProps> = ({ children }) => {
+  console.log('Layout render');
   return (
     <Box>
-      <Navbar />
-      <StyledStack spacing={{ xs: 4, lg: 8 }}>{children}</StyledStack>
+      <MemoizedNavbar />
+      <StyledStack spacing={{ xs: 4, lg: 6 }}>{children}</StyledStack>
     </Box>
   );
 };
