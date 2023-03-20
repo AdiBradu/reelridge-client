@@ -27,19 +27,13 @@ export const useSearchedMovies = () => {
     [activeSlideSearchedMovies],
   );
 
-  const handleActiveSlideMemo = useCallback(
-    (index: number) => {
-      dispatch(setActiveSlideSearchedMovies(index));
-    },
-    [activeSlideSearchedMovies],
-  );
+  const handleActiveSlideMemo = useCallback((index: number) => {
+    dispatch(setActiveSlideSearchedMovies(index));
+  }, []);
 
-  const handlePageNumberMemo = useCallback(
-    (pageNumber: number) => {
-      dispatch(setPageNumberSearchedMovies(pageNumber));
-    },
-    [pageNumberSearchedMovies],
-  );
+  const handlePageNumberMemo = useCallback((pageNumber: number) => {
+    dispatch(setPageNumberSearchedMovies(pageNumber));
+  }, []);
 
   return {
     moviesMemo,

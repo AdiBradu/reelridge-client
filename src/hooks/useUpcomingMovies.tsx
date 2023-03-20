@@ -25,19 +25,13 @@ export const useUpcomingMovies = () => {
     [activeSlideUpcomingMovies],
   );
 
-  const handleActiveSlideMemo = useCallback(
-    (index: number) => {
-      dispatch(setActiveSlideUpcomingMovies(index));
-    },
-    [activeSlideUpcomingMovies],
-  );
+  const handleActiveSlideMemo = useCallback((index: number) => {
+    dispatch(setActiveSlideUpcomingMovies(index));
+  }, []);
 
-  const handlePageNumberMemo = useCallback(
-    (pageNumber: number) => {
-      dispatch(setPageNumberUpcomingMovies(pageNumber));
-    },
-    [pageNumberUpcomingMovies],
-  );
+  const handlePageNumberMemo = useCallback((pageNumber: number) => {
+    dispatch(setPageNumberUpcomingMovies(pageNumber));
+  }, []);
 
   return {
     moviesMemo,

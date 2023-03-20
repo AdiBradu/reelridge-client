@@ -21,11 +21,11 @@ export const UpcomingProvider: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const {
-    pageNumberMemo,
-    handlePageNumberMemo,
     moviesMemo,
     activeSlideMemo,
     handleActiveSlideMemo,
+    pageNumberMemo,
+    handlePageNumberMemo,
   } = useUpcomingMovies();
 
   const { isLoading, error, data, refetch } = useQuery(

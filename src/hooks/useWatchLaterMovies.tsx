@@ -18,12 +18,9 @@ export const useWatchLaterMovies = () => {
     [activeSlideWatchLaterMovies],
   );
 
-  const handleActiveSlideMemo = useCallback(
-    (index: number) => {
-      dispatch(setActiveSlideWatchLaterMovies(index));
-    },
-    [activeSlideWatchLaterMovies],
-  );
+  const handleActiveSlideMemo = useCallback((index: number) => {
+    dispatch(setActiveSlideWatchLaterMovies(index));
+  }, []);
 
   return {
     moviesMemo,
