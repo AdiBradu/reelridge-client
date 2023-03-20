@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 // components
-import { ButtonAdd } from '../Buttons/ButtonAdd/ButtonAdd';
-import { ButtonRemove } from '../Buttons/ButtonRemove/ButtonRemove';
-import { ButtonLogin } from '../Buttons/ButtonLogin/ButtonLogin';
 import { Caption } from '../Typography/Caption';
+import { MemoizedButtonAdd } from '../Buttons/ButtonAdd/ButtonAdd';
+import { MemoizedButtonRemove } from '../Buttons/ButtonRemove/ButtonRemove';
+import { MemoizedButtonLogin } from '../Buttons/ButtonLogin/ButtonLogin';
 // material ui
 import { Stack } from '@mui/material';
 import { styled } from '@mui/system';
@@ -39,15 +39,14 @@ export const SlideActions: React.FC<SlideActionsProps> = ({
   movie,
 }) => {
   console.log('SlideActions render');
+
   const { isLoggedIn } = useAppSelector((state) => state.auth);
   const { watchLaterMovies } = useAppSelector((state) => state.watchlater);
   const location = useLocation();
-  const [titles, setTitles] = useState<(string | undefined)[]>([]);
-
-  useEffect(() => {
-    const titles = watchLaterMovies.map((movie) => movie.title);
-    setTitles(titles);
-  }, [watchLaterMovies]);
+  const titles = useMemo(
+    () => watchLaterMovies.map((movie) => movie.title),
+    [watchLaterMovies],
+  );
 
   return (
     <ActionsWrapper className="hovered">
@@ -55,15 +54,15 @@ export const SlideActions: React.FC<SlideActionsProps> = ({
         {isLoggedIn &&
         location.pathname !== '/watchlater' &&
         !titles.includes(movie.title) ? (
-          <ButtonAdd movies={movies} activeSlide={activeSlide} />
+          <MemoizedButtonAdd movies={movies} activeSlide={activeSlide} />
         ) : isLoggedIn && location.pathname === '/watchlater' ? (
-          <ButtonRemove />
+          <MemoizedButtonRemove />
         ) : isLoggedIn &&
           location.pathname !== '/watchlater' &&
           titles.includes(movie.title) ? (
           <Caption text={'saved'} />
         ) : (
-          <ButtonLogin />
+          <MemoizedButtonLogin />
         )}
       </Actions>
     </ActionsWrapper>

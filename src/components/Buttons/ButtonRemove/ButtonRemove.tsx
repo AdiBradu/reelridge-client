@@ -22,6 +22,7 @@ const RemoveItem = styled(RemoveIcon)(({ theme }) => ({
 
 export const ButtonRemove: React.FC = () => {
   console.log('ButtonRemove render');
+
   const dispatch = useAppDispatch();
   const { activeSlideWatchLaterMovies } = useAppSelector((state) => state.movie);
   const { watchLaterMovies } = useAppSelector((state) => state.watchlater);
@@ -64,3 +65,5 @@ export const ButtonRemove: React.FC = () => {
     </Button>
   );
 };
+
+export const MemoizedButtonRemove = React.memo(ButtonRemove);

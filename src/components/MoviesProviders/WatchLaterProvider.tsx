@@ -18,6 +18,7 @@ import { useWatchLaterMovies } from '../../hooks/useWatchLaterMovies';
 
 export const WatchLaterProvider: React.FC = () => {
   console.log('WatchLaterProvider render');
+
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useAppSelector((state) => state.auth);
   const { moviesMemo, activeSlideMemo, handleActiveSlideMemo } = useWatchLaterMovies();

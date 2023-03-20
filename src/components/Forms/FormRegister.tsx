@@ -51,6 +51,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 export const FormRegister: React.FC = () => {
   console.log('Form Register render');
+
   const [formData, setFormData] = useState<UserRegistrationProps>({
     username: '',
     email: '',

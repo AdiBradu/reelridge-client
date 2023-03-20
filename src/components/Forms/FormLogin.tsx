@@ -54,6 +54,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 export const FormLogin: React.FC = () => {
   console.log('Form Login render');
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<UserLoginProps>({

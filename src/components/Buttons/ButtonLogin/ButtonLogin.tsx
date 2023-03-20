@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 export const ButtonLogin: React.FC = () => {
   console.log('ButtonLogin render');
+
   return (
     <Link to="/login">
       <Button>
@@ -16,3 +17,5 @@ export const ButtonLogin: React.FC = () => {
     </Link>
   );
 };
+
+export const MemoizedButtonLogin = React.memo(ButtonLogin);

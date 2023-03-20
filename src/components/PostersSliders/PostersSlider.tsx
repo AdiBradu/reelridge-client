@@ -58,6 +58,7 @@ export const PostersSlider: React.FC<PostersSliderProps> = ({
   handlePageNumber,
 }) => {
   console.log('Posters Slider render');
+
   const swiperRef = useRef<SwiperCore>();
   const location = useLocation();
 

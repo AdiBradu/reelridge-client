@@ -39,3 +39,5 @@ export const ButtonAdd: React.FC<ButtonAddProps> = ({ movies, activeSlide }) => 
     </Button>
   );
 };
+
+export const MemoizedButtonAdd = React.memo(ButtonAdd);

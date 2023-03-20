@@ -10,6 +10,7 @@ import { useSearchedMovies } from '../../hooks/useSearchedMovies';
 
 export const SearchProvider: React.FC = () => {
   console.log('Search Provider render');
+
   const {
     moviesMemo,
     activeSlideMemo,

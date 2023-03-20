@@ -47,6 +47,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 export const FormSearch: React.FC = () => {
   console.log('FormSearch render');
+
   const dispatch = useAppDispatch();
   const { pageNumberMemo, moviesMemo, searchQueryMemo, handleActiveSlideMemo } =
     useSearchedMovies();
