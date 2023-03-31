@@ -1,74 +1,87 @@
-import React, { useEffect } from 'react';
+import { Fragment, useEffect, lazy, Suspense } from 'react';
 // components
-import { MemoizedMovie } from '../Movie/Movie';
-import { MemoizedPostersSlider } from '../PostersSliders/PostersSlider';
+const MemoizedPoster = lazy(() =>
+  import('../Poster/Poster').then(({ MemoizedPoster }) => ({
+    default: MemoizedPoster,
+  })),
+);
+const MemoizedMovie = lazy(() =>
+  import('../Movie/Movie').then(({ MemoizedMovie }) => ({
+    default: MemoizedMovie,
+  })),
+);
+const MemoizedPostersSlider = lazy(() =>
+  import('../PostersSliders/PostersSlider').then(({ MemoizedPostersSlider }) => ({
+    default: MemoizedPostersSlider,
+  })),
+);
 import { Spinner } from '../Spinner/Spinner';
+import { Status } from '../Status/Status';
+import { ProviderWrapper } from '../../layouts/ProviderWrapper';
 // react-query
 import { useQuery } from 'react-query';
 // api
 import { getUpcomingMovies } from '../../api/features/upcomings';
 import { setUpcomingMovies } from '../../api/features/upcomings/upcomingsSlice';
 // material ui
-import { Stack, Typography } from '@mui/material';
 import theme from '../../styles/theme';
 // redux
 import { useAppDispatch } from '../../api/hooks/hooks';
 // hooks
 import { useUpcomingMovies } from '../../hooks/useUpcomingMovies';
+// utils
+import { dataNotIncluded } from '../../utils/utils';
 
 export const UpcomingProvider: React.FC = () => {
   console.log('Upcoming Provider render');
 
   const dispatch = useAppDispatch();
-  const {
-    moviesMemo,
-    activeSlideMemo,
-    handleActiveSlideMemo,
-    pageNumberMemo,
-    handlePageNumberMemo,
-  } = useUpcomingMovies();
+  const { movie, movies, activeSlide, handleActiveSlide, pageNumber, handlePageNumber } =
+    useUpcomingMovies();
 
   const { isLoading, error, data, refetch } = useQuery(
-    ['upcomingMovies', pageNumberMemo],
-    () => getUpcomingMovies(pageNumberMemo),
+    ['upcomingMovies', pageNumber],
+    () => getUpcomingMovies(pageNumber),
+    {
+      staleTime: 60000,
+    },
   );
 
+  console.log(data);
+
   useEffect(() => {
-    data && !moviesMemo.includes(data[0]) && dispatch(setUpcomingMovies(data));
+    data && dataNotIncluded(movies, data) && dispatch(setUpcomingMovies(data));
   }, [data]);
 
   useEffect(() => {
     refetch;
-  }, [pageNumberMemo]);
+  }, [pageNumber]);
 
   if (isLoading) return <Spinner />;
 
-  {
-    error instanceof Error && (
-      <Typography variant="body1" color={theme.palette.error.light}>
-        {error.message}
-      </Typography>
-    );
-  }
+  if (error instanceof Error)
+    return <Status text={error.message} color={theme.palette.error.light} />;
 
   return (
-    <React.Fragment>
-      {moviesMemo && moviesMemo.length > 0 ? (
-        <Stack spacing={6}>
-          <MemoizedMovie movies={moviesMemo} activeSlide={activeSlideMemo} />
-          <MemoizedPostersSlider
-            movies={moviesMemo}
-            activeSlide={activeSlideMemo}
-            handleActiveSlide={handleActiveSlideMemo}
-            pageNumber={pageNumberMemo}
-            handlePageNumber={handlePageNumberMemo}
-          />
-        </Stack>
+    <Fragment>
+      {movies?.length > 0 ? (
+        <ProviderWrapper>
+          <Suspense fallback={<Spinner />}>
+            <MemoizedPoster movie={movie} />
+            <MemoizedMovie movie={movie} />
+            <MemoizedPostersSlider
+              movie={movie}
+              movies={movies}
+              activeSlide={activeSlide}
+              handleActiveSlide={handleActiveSlide}
+              pageNumber={pageNumber}
+              handlePageNumber={handlePageNumber}
+            />
+          </Suspense>
+        </ProviderWrapper>
       ) : (
-        <Typography variant="body1" color={theme.palette.primary.main100}>
-          No movies loaded
-        </Typography>
+        <Status text={'No movies loaded'} color={theme.palette.primary.main100} />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 };

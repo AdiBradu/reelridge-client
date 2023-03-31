@@ -1,4 +1,3 @@
-import React from 'react';
 // material ui
 import { Box, Stack, Button } from '@mui/material';
 import { styled } from '@mui/system';

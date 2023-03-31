@@ -6,6 +6,8 @@ import {
   setActiveSlideUpcomingMovies,
   setPageNumberUpcomingMovies,
 } from '../api/features/movie/movieSlice';
+// hooks
+import { useMovie } from './useMovie';
 
 export const useUpcomingMovies = () => {
   console.log('useUpcomingMovies render');
@@ -15,29 +17,29 @@ export const useUpcomingMovies = () => {
   const { activeSlideUpcomingMovies } = useAppSelector((state) => state.movie);
   const { pageNumberUpcomingMovies } = useAppSelector((state) => state.movie);
 
-  const moviesMemo = useMemo(() => upcomingMovies, [upcomingMovies]);
-  const pageNumberMemo = useMemo(
-    () => pageNumberUpcomingMovies,
-    [pageNumberUpcomingMovies],
-  );
-  const activeSlideMemo = useMemo(
+  const movies = useMemo(() => upcomingMovies, [upcomingMovies]);
+  const pageNumber = useMemo(() => pageNumberUpcomingMovies, [pageNumberUpcomingMovies]);
+  const activeSlide = useMemo(
     () => activeSlideUpcomingMovies,
     [activeSlideUpcomingMovies],
   );
 
-  const handleActiveSlideMemo = useCallback((index: number) => {
+  const handleActiveSlide = useCallback((index: number) => {
     dispatch(setActiveSlideUpcomingMovies(index));
   }, []);
 
-  const handlePageNumberMemo = useCallback((pageNumber: number) => {
+  const handlePageNumber = useCallback((pageNumber: number) => {
     dispatch(setPageNumberUpcomingMovies(pageNumber));
   }, []);
 
+  const movie = useMovie(movies, activeSlide);
+
   return {
-    moviesMemo,
-    activeSlideMemo,
-    handleActiveSlideMemo,
-    pageNumberMemo,
-    handlePageNumberMemo,
+    movie,
+    movies,
+    activeSlide,
+    handleActiveSlide,
+    pageNumber,
+    handlePageNumber,
   };
 };

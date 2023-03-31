@@ -1,54 +1,23 @@
-import React, { useRef } from 'react';
+import { memo } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore from 'swiper';
 // components
-import { Body } from '../Typography/Body';
 import { MemoizedSlideActions } from '../SlideActions/SlideActions';
-// material ui
-import { Button } from '@mui/material';
-import { styled } from '@mui/system';
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
-// router
-import { useLocation } from 'react-router-dom';
+import { ButtonLoadMore } from '../Buttons/ButtonLoadMore/ButtonLoadMore';
+import { ButtonSwiper } from '../Buttons/ButtonSwiper/ButtonSwiper';
 // types
 import { UpcomingProps, PostersSliderProps } from '../../types/types';
-
+// hooks
+import { useSwiperNavigation } from '../../hooks/useSwiperNavigation';
+import { usePosterAnimation } from '../../hooks/usePosterAnimation';
+// assets
+import tmdb from '../../assets/images/tmdb.jpg';
 // Import Swiper styles
 import 'swiper/css';
 import './PostersSlider.css';
 
 const base_url = 'https://image.tmdb.org/t/p/';
 const poster_size = 'w500/';
-
-const ButtonSliderLeft = styled(Button)(({ theme }) => ({
-  width: '48px',
-  height: '100%',
-  position: 'absolute',
-  left: 0,
-  top: 0,
-  zIndex: 1600,
-  backgroundColor: 'rgba(0,0,0,0.3)',
-  [theme.breakpoints.up('lg')]: {
-    width: '64px',
-    height: '100%',
-  },
-}));
-
-const ButtonSliderRight = styled(Button)(({ theme }) => ({
-  width: '48px',
-  height: '100%',
-  position: 'absolute',
-  right: 0,
-  top: 0,
-  zIndex: 1600,
-  backgroundColor: 'rgba(0,0,0,0.3)',
-  [theme.breakpoints.up('lg')]: {
-    width: '64px',
-    height: '100%',
-  },
-}));
 
 export const PostersSlider: React.FC<PostersSliderProps> = ({
   movies,
@@ -58,14 +27,13 @@ export const PostersSlider: React.FC<PostersSliderProps> = ({
   handlePageNumber,
 }) => {
   console.log('Posters Slider render');
-
-  const swiperRef = useRef<SwiperCore>();
-  const location = useLocation();
+  const { swiperRef, handleSwiperNavigation } = useSwiperNavigation();
+  const { handleAnimation } = usePosterAnimation();
 
   return (
     <Swiper
       spaceBetween={16}
-      className="my-swiper"
+      className={'mySwiper'}
       onActiveIndexChange={(swiper) => {
         handleActiveSlide?.(swiper.activeIndex);
       }}
@@ -74,45 +42,48 @@ export const PostersSlider: React.FC<PostersSliderProps> = ({
         swiperRef.current = swiper;
       }}
       breakpoints={{
-        320: {
+        0: {
           slidesPerView: 2,
           height: 320,
         },
-        800: {
+        600: {
+          slidesPerView: 3,
+        },
+        900: {
           slidesPerView: 4,
         },
-        1440: {
+        1200: {
           slidesPerView: 6,
+        },
+        1536: {
+          slidesPerView: 8,
         },
       }}
     >
-      <ButtonSliderLeft
-        onClick={() => swiperRef.current?.slidePrev()}
-        aria-label={'Slide left'}
-      >
-        <ArrowBackIosNewRoundedIcon />
-      </ButtonSliderLeft>
-      <ButtonSliderRight
-        onClick={() => swiperRef.current?.slideNext()}
-        aria-label={'Slide right'}
-      >
-        <ArrowForwardIosRoundedIcon />
-      </ButtonSliderRight>
+      <ButtonSwiper
+        direction={'left'}
+        handleSwiperNavigation={() => handleSwiperNavigation('left')}
+      />
+      <ButtonSwiper
+        direction={'right'}
+        handleSwiperNavigation={() => handleSwiperNavigation('right')}
+      />
       {movies?.map((movie: UpcomingProps, index: number) => (
         <SwiperSlide
           key={`${movie.title} ${index}`}
-          className={`my-swiper-slide`}
-          onClick={() => handleActiveSlide?.(index)}
+          className={'mySwiperSlide'}
+          onClick={() => {
+            handleActiveSlide?.(index);
+            handleAnimation();
+          }}
         >
-          {activeSlide === index && (
-            <MemoizedSlideActions
-              movie={movies[activeSlide]}
-              movies={movies}
-              activeSlide={activeSlide}
-            />
-          )}
+          {activeSlide === index && <MemoizedSlideActions movie={movie} />}
           <img
-            src={`${base_url}${poster_size}/${movie.image_path}`}
+            src={
+              movie.image_path
+                ? `${base_url}${poster_size}/${movie.image_path}`
+                : `${tmdb}`
+            }
             alt={movie.title}
             width={'100%'}
             height={'100%'}
@@ -120,16 +91,11 @@ export const PostersSlider: React.FC<PostersSliderProps> = ({
           />
         </SwiperSlide>
       ))}
-      {location.pathname !== '/watchlater' && pageNumber && (
-        <SwiperSlide
-          className="my-swiper-slide"
-          onClick={() => handlePageNumber?.(pageNumber)}
-        >
-          <Body text={'Load more'} aria-label={'Load more movies'} />
-        </SwiperSlide>
-      )}
+      <SwiperSlide>
+        <ButtonLoadMore pageNumber={pageNumber} handlePageNumber={handlePageNumber} />
+      </SwiperSlide>
     </Swiper>
   );
 };
 
-export const MemoizedPostersSlider = React.memo(PostersSlider);
+export const MemoizedPostersSlider = memo(PostersSlider);

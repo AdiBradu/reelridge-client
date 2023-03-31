@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 // material ui
 import { Button, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/system';
@@ -35,7 +35,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({ name, icon, url }) => {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
 
   return (
-    <React.Fragment>
+    <Fragment>
       {isLoggedIn && name === 'login' ? (
         <></>
       ) : (
@@ -50,6 +50,6 @@ export const MenuItem: React.FC<MenuItemProps> = ({ name, icon, url }) => {
           </StyledButton>
         </Link>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 };

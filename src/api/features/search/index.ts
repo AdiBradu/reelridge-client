@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const searchMovie = async (search: { query: string; pageNumberMemo: number }) => {
+export const searchMovie = async (search: { query: string; pageNumber: number }) => {
   try {
     console.log('searching');
     const response = await axios.post('http://localhost:5050/search', {
@@ -9,7 +9,7 @@ export const searchMovie = async (search: { query: string; pageNumberMemo: numbe
       },
       data: {
         query: search.query,
-        page: search.pageNumberMemo,
+        page: search.pageNumber,
       },
     });
     return response.data;

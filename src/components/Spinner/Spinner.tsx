@@ -1,4 +1,3 @@
-import * as React from 'react';
 // material ui
 import { CircularProgress, Box, Stack } from '@mui/material';
 import { styled } from '@mui/system';

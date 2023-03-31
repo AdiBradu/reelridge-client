@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { MutableRefObject } from 'react';
+import SwiperCore from 'swiper';
 // material ui
-import { BoxProps } from '@mui/system';
+// import { Butt } from '@mui/system';
+import { ButtonProps } from '@mui/material';
 
 export interface Routes {
   path: string;
@@ -9,7 +11,7 @@ export interface Routes {
   element?: JSX.Element | undefined;
 }
 
-export interface LayoutDefaultProps {
+export interface LayoutProps {
   children: JSX.Element | JSX.Element[];
 }
 
@@ -56,7 +58,7 @@ export interface ImagePathsProps {
   imagePaths: (string | undefined)[] | undefined;
 }
 
-export interface PostersSliderProps {
+export interface PostersSliderProps extends MovieProps {
   movies?: UpcomingProps[];
   activeSlide: number;
   pageNumber?: number;
@@ -65,12 +67,7 @@ export interface PostersSliderProps {
 }
 
 export interface MovieProps {
-  movies: UpcomingProps[];
-  activeSlide: number;
-}
-
-export interface StyledTitleBoxProps extends BoxProps {
-  trigger?: number | undefined;
+  movie: UpcomingProps;
 }
 
 export interface UserRegistrationProps {
@@ -109,13 +106,21 @@ export interface FormLoginProps extends FormProps {
   formData: UserLoginProps;
 }
 
-export interface ButtonAddProps {
-  movies: UpcomingProps[];
-  activeSlide: number;
+export interface StatusProps {
+  text: string;
+  color: string | undefined;
 }
 
-export interface SlideActionsProps {
-  movie: UpcomingProps;
-  movies: UpcomingProps[];
-  activeSlide: number;
+export interface ButtonLoadMoreProps {
+  pageNumber?: number;
+  handlePageNumber?: (number: number) => void;
+}
+
+export interface ButtonSwiperProps {
+  direction: 'left' | 'right';
+  handleSwiperNavigation: (direction: string) => void;
+}
+
+export interface ButtonFormProps extends ButtonProps {
+  text?: string;
 }

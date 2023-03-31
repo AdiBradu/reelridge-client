@@ -44,12 +44,12 @@ const font = "'Work Sans', sans-serif";
 const theme = createTheme();
 
 // breakpoints
-theme.breakpoints.values.lg = 1440;
+theme.breakpoints.values.lg = 1200;
 
 // primary color Yellowstone
 theme.palette.primary.main = '#FFA845';
 theme.palette.primary.main100 = '#FFE7CC';
-theme.palette.primary.main200 = '#FFE7CC';
+theme.palette.primary.main200 = '#FFCF99';
 theme.palette.primary.main600 = '#CC6D00';
 theme.palette.primary.main700 = '#995200';
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { memo, useState } from 'react';
 // components
 import { ReelRidgeLogo } from '../../../assets/logos/ReelRidgeLogo/ReelRidgeLogo';
 import { Menu } from '../Menu/Menu';
@@ -11,13 +11,13 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import { Link } from 'react-router-dom';
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  padding: '32px 16px',
+  paddingTop: '32px',
   position: 'relative',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  backgroundColor: theme.palette.secondary.main,
+  background: 'transparent',
   [theme.breakpoints.up('lg')]: {
-    padding: '32px 128px',
+    paddingTop: '32px',
   },
 }));
 
@@ -79,4 +79,4 @@ export const Navbar: React.FC = () => {
   );
 };
 
-export const MemoizedNavbar = React.memo(Navbar);
+export const MemoizedNavbar = memo(Navbar);

@@ -6,7 +6,7 @@ const StyledButton = styled(Button)(() => ({
   padding: '0px',
 }));
 
-export const ReelRidgeLogo = () => {
+export const ReelRidgeLogo: React.FC = () => {
   return (
     <StyledButton aria-label={'ReelRidge Logo Go Home'}>
       <svg

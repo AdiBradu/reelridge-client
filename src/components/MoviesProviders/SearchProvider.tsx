@@ -1,42 +1,38 @@
-import React from 'react';
+import { Fragment } from 'react';
 // components
 import { MemoizedMovie } from '../Movie/Movie';
 import { MemoizedPostersSlider } from '../PostersSliders/PostersSlider';
+import { Status } from '../Status/Status';
+import { MemoizedPoster } from '../Poster/Poster';
+import { ProviderWrapper } from '../../layouts/ProviderWrapper';
 // material ui
-import { Stack, Typography } from '@mui/material';
 import theme from '../../styles/theme';
 // hooks
 import { useSearchedMovies } from '../../hooks/useSearchedMovies';
 
 export const SearchProvider: React.FC = () => {
   console.log('Search Provider render');
-
-  const {
-    moviesMemo,
-    activeSlideMemo,
-    handleActiveSlideMemo,
-    pageNumberMemo,
-    handlePageNumberMemo,
-  } = useSearchedMovies();
+  const { movie, movies, activeSlide, handleActiveSlide, pageNumber, handlePageNumber } =
+    useSearchedMovies();
 
   return (
-    <React.Fragment>
-      {moviesMemo && moviesMemo.length > 0 ? (
-        <Stack spacing={6}>
-          <MemoizedMovie movies={moviesMemo} activeSlide={activeSlideMemo} />
+    <Fragment>
+      {movies?.length > 0 ? (
+        <ProviderWrapper>
+          <MemoizedPoster movie={movie} />
+          <MemoizedMovie movie={movie} />
           <MemoizedPostersSlider
-            movies={moviesMemo}
-            activeSlide={activeSlideMemo}
-            handleActiveSlide={handleActiveSlideMemo}
-            pageNumber={pageNumberMemo}
-            handlePageNumber={handlePageNumberMemo}
+            movie={movie}
+            movies={movies}
+            activeSlide={activeSlide}
+            handleActiveSlide={handleActiveSlide}
+            pageNumber={pageNumber}
+            handlePageNumber={handlePageNumber}
           />
-        </Stack>
+        </ProviderWrapper>
       ) : (
-        <Typography variant="body1" color={theme.palette.primary.main100}>
-          No movies loaded
-        </Typography>
+        <Status text={'No movies loaded'} color={theme.palette.primary.main100} />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 };

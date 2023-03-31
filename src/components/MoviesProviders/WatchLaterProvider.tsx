@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 // components
 import { MemoizedMovie } from '../../components/Movie/Movie';
 import { MemoizedPostersSlider } from '../../components/PostersSliders/PostersSlider';
 import { Spinner } from '../../components/Spinner/Spinner';
+import { Status } from '../Status/Status';
+import { MemoizedPoster } from '../Poster/Poster';
+import { ProviderWrapper } from '../../layouts/ProviderWrapper';
 // react query
 import { useQuery } from 'react-query';
 // api
 import { getWatchlaterMovies } from '../../api/features/watchlater';
 import { setWatchLaterMovies } from '../../api/features/watchlater/watchLaterSlice';
 // material ui
-import { Typography, Stack } from '@mui/material';
 import theme from '../../styles/theme';
 // redux
 import { useAppSelector, useAppDispatch } from '../../api/hooks/hooks';
@@ -21,7 +23,7 @@ export const WatchLaterProvider: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useAppSelector((state) => state.auth);
-  const { moviesMemo, activeSlideMemo, handleActiveSlideMemo } = useWatchLaterMovies();
+  const { movie, movies, activeSlide, handleActiveSlide } = useWatchLaterMovies();
 
   const { isLoading, error, data } = useQuery(
     'watchlaterMovies',
@@ -35,30 +37,28 @@ export const WatchLaterProvider: React.FC = () => {
 
   if (isLoading) return <Spinner />;
 
-  {
-    error instanceof Error && (
-      <Typography variant="body1" color={theme.palette.error.light}>
-        {error.message}
-      </Typography>
-    );
-  }
+  if (error instanceof Error)
+    return <Status text={error.message} color={theme.palette.error.light} />;
 
   return (
-    <React.Fragment>
-      {moviesMemo && moviesMemo.length > 0 ? (
-        <Stack spacing={6}>
-          <MemoizedMovie movies={moviesMemo} activeSlide={activeSlideMemo} />
+    <Fragment>
+      {movies?.length > 0 ? (
+        <ProviderWrapper>
+          <MemoizedPoster movie={movie} />
+          <MemoizedMovie movie={movie} />
           <MemoizedPostersSlider
-            movies={moviesMemo}
-            activeSlide={activeSlideMemo}
-            handleActiveSlide={handleActiveSlideMemo}
+            movie={movie}
+            movies={movies}
+            activeSlide={activeSlide}
+            handleActiveSlide={handleActiveSlide}
           />
-        </Stack>
+        </ProviderWrapper>
       ) : (
-        <Typography variant="body1" color={theme.palette.primary.main100}>
-          You don't have any saved movies.
-        </Typography>
+        <Status
+          text={`You don't have any saved movies`}
+          color={theme.palette.primary.main100}
+        />
       )}
-    </React.Fragment>
+    </Fragment>
   );
 };

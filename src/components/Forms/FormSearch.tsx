@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // components
 import { Input } from '../Input/Input';
 import { Spinner } from '../../components/Spinner/Spinner';
+import { Status } from '../Status/Status';
+import { MemoizedButtonForm } from '../Buttons/ButtonLogin/ButtonForm';
 // material ui
-import { Box, Button, Typography, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { styled } from '@mui/system';
 import theme from '../../styles/theme';
 // react query
@@ -32,25 +34,10 @@ const FormBodyFooter = styled(Stack)(() => ({
   gap: '16px',
 }));
 
-const StyledButtonText = styled(Typography)(() => ({
-  fontWeight: '500',
-}));
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.secondary.main,
-  padding: '16px 16px',
-  '&:hover': {
-    color: theme.palette.primary.main,
-  },
-}));
-
 export const FormSearch: React.FC = () => {
   console.log('FormSearch render');
-
   const dispatch = useAppDispatch();
-  const { pageNumberMemo, moviesMemo, searchQueryMemo, handleActiveSlideMemo } =
-    useSearchedMovies();
+  const { pageNumber, movies, searchQueryMemo, handleActiveSlide } = useSearchedMovies();
   const [query, setQuery] = useState(searchQueryMemo);
 
   const {
@@ -58,9 +45,7 @@ export const FormSearch: React.FC = () => {
     data,
     isLoading,
     error,
-  } = useMutation((search: { query: string; pageNumberMemo: number }) =>
-    searchMovie(search),
-  );
+  } = useMutation((search: { query: string; pageNumber: number }) => searchMovie(search));
 
   const handleChangeQuery = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -70,19 +55,23 @@ export const FormSearch: React.FC = () => {
 
   const handleSearch = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    searchQueryMemo !== query && moviesMemo[0] && dispatch(setSearchedMovies([]));
-    searchQueryMemo !== query && moviesMemo[0] && handleActiveSlideMemo(0);
-    searchQueryMemo !== query && searchMovieMutation({ query, pageNumberMemo });
-    searchQueryMemo !== query && dispatch(setSearchQuery(query));
+    if (searchQueryMemo !== query && movies[0]) {
+      dispatch(setSearchedMovies([]));
+      handleActiveSlide(0);
+    }
+    if (searchQueryMemo !== query) {
+      searchMovieMutation({ query, pageNumber });
+      dispatch(setSearchQuery(query));
+    }
   };
 
   useEffect(() => {
-    data && dispatch(setSearchedMovies([...moviesMemo, ...data]));
+    data && dispatch(setSearchedMovies([...movies, ...data]));
   }, [data]);
 
   useEffect(() => {
-    searchMovieMutation({ query, pageNumberMemo });
-  }, [pageNumberMemo]);
+    searchMovieMutation({ query, pageNumber });
+  }, [pageNumber]);
 
   if (isLoading) return <Spinner />;
 
@@ -91,14 +80,7 @@ export const FormSearch: React.FC = () => {
       <form onSubmit={(event: React.ChangeEvent<HTMLFormElement>) => handleSearch(event)}>
         <FormBody>
           {error instanceof Error && (
-            <Typography variant="body1" color={theme.palette.error.light}>
-              {error.message}
-            </Typography>
-          )}
-          {data && (
-            <Typography variant="body1" color={theme.palette.success.light}>
-              {data.message}
-            </Typography>
+            <Status text={error.message} color={theme.palette.error.light} />
           )}
           <FormBodyInputs>
             <Input
@@ -111,9 +93,11 @@ export const FormSearch: React.FC = () => {
             />
           </FormBodyInputs>
           <FormBodyFooter>
-            <StyledButton type="submit" disabled={query !== '' ? false : true}>
-              <StyledButtonText variant="body1">search</StyledButtonText>
-            </StyledButton>
+            <MemoizedButtonForm
+              type={'submit'}
+              text={'search'}
+              disabled={query !== '' ? false : true}
+            />
           </FormBodyFooter>
         </FormBody>
       </form>

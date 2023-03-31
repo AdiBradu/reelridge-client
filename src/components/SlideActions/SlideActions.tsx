@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
+import { memo } from 'react';
 // components
 import { Caption } from '../Typography/Caption';
 import { MemoizedButtonAdd } from '../Buttons/ButtonAdd/ButtonAdd';
 import { MemoizedButtonRemove } from '../Buttons/ButtonRemove/ButtonRemove';
-import { MemoizedButtonLogin } from '../Buttons/ButtonLogin/ButtonLogin';
+import { MemoizedButtonLoginSlideAction } from '../Buttons/ButtonLogin/ButtonLoginSlideAction';
 // material ui
 import { Stack } from '@mui/material';
 import { styled } from '@mui/system';
@@ -12,7 +12,9 @@ import { useAppSelector } from '../../api/hooks/hooks';
 // router
 import { useLocation } from 'react-router-dom';
 // types
-import { SlideActionsProps } from '../../types/types';
+import { MovieProps } from '../../types/types';
+// utils
+import { includesTitle } from '../../utils/utils';
 
 const ActionsWrapper = styled(Stack)(() => ({
   position: 'absolute',
@@ -33,40 +35,30 @@ const Actions = styled(Stack)(({ theme }) => ({
   opacity: 0.9,
 }));
 
-export const SlideActions: React.FC<SlideActionsProps> = ({
-  movies,
-  activeSlide,
-  movie,
-}) => {
+export const SlideActions: React.FC<MovieProps> = ({ movie }) => {
   console.log('SlideActions render');
 
   const { isLoggedIn } = useAppSelector((state) => state.auth);
   const { watchLaterMovies } = useAppSelector((state) => state.watchlater);
   const location = useLocation();
-  const titles = useMemo(
-    () => watchLaterMovies.map((movie) => movie.title),
-    [watchLaterMovies],
-  );
+  const isWatchlaterPage = location.pathname === '/watchlater';
+  const titles = watchLaterMovies.map((movie) => movie.title);
 
   return (
     <ActionsWrapper className="hovered">
       <Actions>
-        {isLoggedIn &&
-        location.pathname !== '/watchlater' &&
-        !titles.includes(movie.title) ? (
-          <MemoizedButtonAdd movies={movies} activeSlide={activeSlide} />
-        ) : isLoggedIn && location.pathname === '/watchlater' ? (
+        {isLoggedIn && !isWatchlaterPage && !includesTitle(titles, movie?.title) ? (
+          <MemoizedButtonAdd movie={movie} />
+        ) : isLoggedIn && isWatchlaterPage ? (
           <MemoizedButtonRemove />
-        ) : isLoggedIn &&
-          location.pathname !== '/watchlater' &&
-          titles.includes(movie.title) ? (
+        ) : isLoggedIn && !isWatchlaterPage && includesTitle(titles, movie?.title) ? (
           <Caption text={'saved'} />
         ) : (
-          <MemoizedButtonLogin />
+          <MemoizedButtonLoginSlideAction />
         )}
       </Actions>
     </ActionsWrapper>
   );
 };
 
-export const MemoizedSlideActions = React.memo(SlideActions);
+export const MemoizedSlideActions = memo(SlideActions);

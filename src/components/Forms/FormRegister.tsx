@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // components
 import { Input } from '../Input/Input';
 import { Spinner } from '../../components/Spinner/Spinner';
+import { MemoizedButtonForm } from '../Buttons/ButtonLogin/ButtonForm';
 // material ui
-import { Box, Button, Typography, Stack, Link } from '@mui/material';
+import { Box, Typography, Stack, Link } from '@mui/material';
 import { styled } from '@mui/system';
 import theme from '../../styles/theme';
 // types
@@ -36,22 +37,9 @@ const FormFooterText = styled(Typography)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-const StyledButtonText = styled(Typography)(() => ({
-  fontWeight: '500',
-}));
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.secondary.main,
-  padding: '16px 16px',
-  '&:hover': {
-    color: theme.palette.primary.main,
-  },
-}));
-
 export const FormRegister: React.FC = () => {
   console.log('Form Register render');
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<UserRegistrationProps>({
     username: '',
     email: '',
@@ -69,12 +57,6 @@ export const FormRegister: React.FC = () => {
     registerUserMutation(formData);
   };
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    data && setTimeout(() => navigate('/login'), 3000);
-  }, [data]);
-
   const handleChangeFormData = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ): void => {
@@ -83,6 +65,10 @@ export const FormRegister: React.FC = () => {
       [event.target.name]: event.target.value,
     }));
   };
+
+  useEffect(() => {
+    data && setTimeout(() => navigate('/login'), 3000);
+  }, [data]);
 
   if (isLoading) return <Spinner />;
 
@@ -127,9 +113,7 @@ export const FormRegister: React.FC = () => {
             />
           </FormBodyInputs>
           <FormBodyFooter>
-            <StyledButton type="submit">
-              <StyledButtonText variant="body1">register account</StyledButtonText>
-            </StyledButton>
+            <MemoizedButtonForm type={'submit'} text={'register account'} />
             <FormFooterText variant="caption">
               Please{' '}
               <Link href={'/login'} color={theme.palette.primary.main600}>

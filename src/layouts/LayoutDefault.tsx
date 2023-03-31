@@ -1,28 +1,23 @@
-import React from 'react';
 // material ui
-import { Box, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { styled } from '@mui/system';
 // types
-import { LayoutDefaultProps } from '../types/types';
-//components
-import { MemoizedNavbar } from '../components/Navigation/Navbar/Navbar';
+import { LayoutProps } from '../types/types';
 
 const StyledStack = styled(Stack)(({ theme }) => ({
+  position: 'relative',
   width: '100%',
   minHeight: '100vh',
   padding: '0px 16px 64px 16px',
   backgroundColor: theme.palette.secondary.main,
+  gap: '32px',
   [theme.breakpoints.up('lg')]: {
-    padding: '32px 128px 128px 128px',
+    padding: '0px 128px 128px 128px',
+    gap: '48px',
   },
 }));
 
-export const LayoutDefault: React.FC<LayoutDefaultProps> = ({ children }) => {
-  console.log('Layout render');
-  return (
-    <Box>
-      <MemoizedNavbar />
-      <StyledStack spacing={{ xs: 4, lg: 6 }}>{children}</StyledStack>
-    </Box>
-  );
+export const LayoutDefault: React.FC<LayoutProps> = ({ children }) => {
+  console.log('Layout Default render');
+  return <StyledStack>{children}</StyledStack>;
 };

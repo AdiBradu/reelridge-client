@@ -1,4 +1,3 @@
-import React from 'react';
 // material ui
 import { Typography } from '@mui/material';
 import { styled } from '@mui/system';
@@ -7,6 +6,7 @@ import { TextProps } from '../../types/types';
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.main100,
+  zIndex: 105,
 }));
 
 export const Heading2: React.FC<TextProps> = ({ text }) => {
@@ -14,5 +14,3 @@ export const Heading2: React.FC<TextProps> = ({ text }) => {
 
   return <StyledTypography variant="h2">{text}</StyledTypography>;
 };
-
-export const MemoizedHeading2 = React.memo(Heading2);

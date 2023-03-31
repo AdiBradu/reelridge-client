@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // components
 import { Input } from '../Input/Input';
 import { Spinner } from '../../components/Spinner/Spinner';
+import { Status } from '../Status/Status';
+import { MemoizedButtonForm } from '../Buttons/ButtonLogin/ButtonForm';
 // material ui
-import { Box, Button, Typography, Stack, Link } from '@mui/material';
+import { Box, Typography, Stack, Link } from '@mui/material';
 import { styled } from '@mui/system';
 import theme from '../../styles/theme';
 // types
@@ -39,22 +41,8 @@ const FormFooterText = styled(Typography)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-const StyledButtonText = styled(Typography)(() => ({
-  fontWeight: '500',
-}));
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.secondary.main,
-  padding: '16px 16px',
-  '&:hover': {
-    color: theme.palette.primary.main,
-  },
-}));
-
 export const FormLogin: React.FC = () => {
   console.log('Form Login render');
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<UserLoginProps>({
@@ -73,17 +61,6 @@ export const FormLogin: React.FC = () => {
     loginUserMutation(formData);
   };
 
-  useEffect(() => {
-    data && sessionStorage.setItem('token', data.token);
-    data && sessionStorage.setItem('user', data.id);
-    data && dispatch(setLoginUser());
-    data && dispatch(setUserName(data.username));
-    data &&
-      setTimeout(() => {
-        navigate('/watchlater');
-      }, 1500);
-  }, [data]);
-
   const handleChangeFormData = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ): void => {
@@ -93,6 +70,18 @@ export const FormLogin: React.FC = () => {
     }));
   };
 
+  useEffect(() => {
+    if (data) {
+      sessionStorage.setItem('token', data.token);
+      sessionStorage.setItem('user', data.id);
+      dispatch(setLoginUser());
+      dispatch(setUserName(data.username));
+      setTimeout(() => {
+        navigate('/watchlater');
+      }, 1500);
+    }
+  }, [data]);
+
   if (isLoading) return <Spinner />;
 
   return (
@@ -100,15 +89,9 @@ export const FormLogin: React.FC = () => {
       <form onSubmit={handleLogin}>
         <FormBody>
           {error instanceof Error && (
-            <Typography variant="body1" color={theme.palette.error.light}>
-              {error.message}
-            </Typography>
+            <Status text={error.message} color={theme.palette.error.light} />
           )}
-          {data && (
-            <Typography variant="body1" color={theme.palette.success.light}>
-              {data.message}
-            </Typography>
-          )}
+          {data && <Status text={data.message} color={theme.palette.success.light} />}
           <FormBodyInputs>
             <Input
               label="email"
@@ -128,9 +111,7 @@ export const FormLogin: React.FC = () => {
             />
           </FormBodyInputs>
           <FormBodyFooter>
-            <StyledButton type="submit">
-              <StyledButtonText variant="body1">Login</StyledButtonText>
-            </StyledButton>
+            <MemoizedButtonForm type={'submit'} text={'login'} />
             <FormFooterText variant="caption">
               Please{' '}
               <Link href={'/register'} color={theme.palette.primary.main600}>
