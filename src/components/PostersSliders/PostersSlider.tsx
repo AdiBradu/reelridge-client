@@ -12,9 +12,6 @@ import { useSwiperNavigation } from '../../hooks/useSwiperNavigation';
 import { usePosterAnimation } from '../../hooks/usePosterAnimation';
 // assets
 import tmdb from '../../assets/images/tmdb.jpg';
-// Import Swiper styles
-import 'swiper/css';
-import './PostersSlider.css';
 
 const base_url = 'https://image.tmdb.org/t/p/';
 const poster_size = 'w500/';

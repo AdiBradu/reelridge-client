@@ -147,3 +147,25 @@ form {
   flex-direction: column;
   gap: 20px;
 }
+img.poster {
+  object-fit: cover;
+  background: linear-gradient(
+      218.23deg,
+      rgba(32, 31, 36, 0.4) 0%,
+      rgba(32, 31, 36, 0) 100%
+    ),
+    linear-gradient(270deg, rgba(32, 31, 36, 0.2) 0%, #201f24 100%),
+    linear-gradient(180deg, rgba(32, 31, 36, 0.2) 0%, #201f24 97.97%);
+  background-blend-mode: normal;
+}
+.animatePoster {
+  animation: fadeIn ease 0.5s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

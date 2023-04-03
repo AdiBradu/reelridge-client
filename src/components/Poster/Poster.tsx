@@ -1,6 +1,4 @@
 import { memo } from 'react';
-// // styles
-import '../../styles/animationPoster.css';
 // material ui
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -35,11 +33,11 @@ const Overlay = styled(Box)(() => ({
   background: `linear-gradient(218.23deg, rgba(32, 31, 36, 0.4) 0%, rgba(32, 31, 36, 0) 100%), linear-gradient(270deg, rgba(32, 31, 36, 0.2) 0%, #201F24 100%), linear-gradient(180deg, rgba(32, 31, 36, 0.2) 0%, #201F24 97.97%)`,
 }));
 
-const StyledImage = styled('img')(() => ({
-  objectFit: 'cover',
-  background: `linear-gradient(218.23deg, rgba(32, 31, 36, 0.4) 0%, rgba(32, 31, 36, 0) 100%), linear-gradient(270deg, rgba(32, 31, 36, 0.2) 0%, #201F24 100%), linear-gradient(180deg, rgba(32, 31, 36, 0.2) 0%, #201F24 97.97%)`,
-  backgroundBlendMode: 'normal',
-}));
+// const StyledImage = styled('img')(() => ({
+//   objectFit: 'cover',
+//   background: `linear-gradient(218.23deg, rgba(32, 31, 36, 0.4) 0%, rgba(32, 31, 36, 0) 100%), linear-gradient(270deg, rgba(32, 31, 36, 0.2) 0%, #201F24 100%), linear-gradient(180deg, rgba(32, 31, 36, 0.2) 0%, #201F24 97.97%)`,
+//   backgroundBlendMode: 'normal',
+// }));
 
 const base_url = 'https://image.tmdb.org/t/p/';
 const poster_size = 'w500/';
@@ -50,7 +48,8 @@ export const Poster: React.FC<MovieProps> = ({ movie }) => {
   return (
     <StyledBox>
       <Overlay />
-      <StyledImage
+      <img
+        className={'poster'}
         src={
           movie?.image_path ? `${base_url}${poster_size}/${movie.image_path}` : `${tmdb}`
         }

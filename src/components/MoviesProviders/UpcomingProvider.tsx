@@ -1,21 +1,10 @@
 import { Fragment, useEffect, lazy, Suspense } from 'react';
 // components
-// import { MemoizedPoster } from '../Poster/Poster';
 import { MemoizedMovie } from '../Movie/Movie';
-// import { MemoizedPostersSlider } from '../PostersSliders/PostersSlider';
+import { MemoizedPostersSlider } from '../PostersSliders/PostersSlider';
 const MemoizedPoster = lazy(() =>
   import('../Poster/Poster').then(({ MemoizedPoster }) => ({
     default: MemoizedPoster,
-  })),
-);
-// const MemoizedMovie = lazy(() =>
-//   import('../Movie/Movie').then(({ MemoizedMovie }) => ({
-//     default: MemoizedMovie,
-//   })),
-// );
-const MemoizedPostersSlider = lazy(() =>
-  import('../PostersSliders/PostersSlider').then(({ MemoizedPostersSlider }) => ({
-    default: MemoizedPostersSlider,
   })),
 );
 import { Spinner } from '../Spinner/Spinner';
@@ -71,16 +60,16 @@ export const UpcomingProvider: React.FC = () => {
         <ProviderWrapper>
           <Suspense fallback={<Spinner />}>
             <MemoizedPoster movie={movie} />
-            <MemoizedMovie movie={movie} />
-            <MemoizedPostersSlider
-              movie={movie}
-              movies={movies}
-              activeSlide={activeSlide}
-              handleActiveSlide={handleActiveSlide}
-              pageNumber={pageNumber}
-              handlePageNumber={handlePageNumber}
-            />
           </Suspense>
+          <MemoizedMovie movie={movie} />
+          <MemoizedPostersSlider
+            movie={movie}
+            movies={movies}
+            activeSlide={activeSlide}
+            handleActiveSlide={handleActiveSlide}
+            pageNumber={pageNumber}
+            handlePageNumber={handlePageNumber}
+          />
         </ProviderWrapper>
       ) : (
         <Status text={'No movies loaded'} color={theme.palette.primary.main100} />

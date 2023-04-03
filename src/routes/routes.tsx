@@ -1,25 +1,41 @@
+import { lazy } from 'react';
 // pages
-import { NoPage } from '../pages/404Page/NoPage';
-import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
-import { LoginPage } from '../pages/LoginPage/LoginPage';
+// import { NoPage } from '../pages/404Page/NoPage';
+// import { RegisterPage } from '../pages/RegisterPage/RegisterPage';
+// import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { UpcomingPage } from '../pages/UpcomingPage/UpcomingPage';
-import { WatchLaterPage } from '../pages/WatchLaterPage/WatchLaterPage';
-import { SearchPage } from '../pages/SearchPage/SearchPage';
+// import { WatchLaterPage } from '../pages/WatchLaterPage/WatchLaterPage';
+// import { SearchPage } from '../pages/SearchPage/SearchPage';
 // const UpcomingPage = lazy(() =>
 //   import('../pages/UpcomingPage/UpcomingPage').then(({ UpcomingPage }) => ({
 //     default: UpcomingPage,
 //   })),
 // );
-// const WatchLaterPage = lazy(() =>
-//   import('../pages/WatchLaterPage/WatchLaterPage').then(({ WatchLaterPage }) => ({
-//     default: WatchLaterPage,
-//   })),
-// );
-// const SearchPage = lazy(() =>
-//   import('../pages/SearchPage/SearchPage').then(({ SearchPage }) => ({
-//     default: SearchPage,
-//   })),
-// );
+const WatchLaterPage = lazy(() =>
+  import('../pages/WatchLaterPage/WatchLaterPage').then(({ WatchLaterPage }) => ({
+    default: WatchLaterPage,
+  })),
+);
+const SearchPage = lazy(() =>
+  import('../pages/SearchPage/SearchPage').then(({ SearchPage }) => ({
+    default: SearchPage,
+  })),
+);
+const RegisterPage = lazy(() =>
+  import('../pages/RegisterPage/RegisterPage').then(({ RegisterPage }) => ({
+    default: RegisterPage,
+  })),
+);
+const LoginPage = lazy(() =>
+  import('../pages/LoginPage/LoginPage').then(({ LoginPage }) => ({
+    default: LoginPage,
+  })),
+);
+const NoPage = lazy(() =>
+  import('../pages/404Page/NoPage').then(({ NoPage }) => ({
+    default: NoPage,
+  })),
+);
 
 // types
 import { Routes } from '../types/types';
