@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 // routing
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PrivateRoutes } from './routes/PrivateRoutes';
@@ -14,18 +13,16 @@ export const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <Suspense fallback={<Spinner />}>
-          <Routes>
-            <Route element={<PrivateRoutes />}>
-              {protectedRoutes.map((route) => (
-                <Route key={route.path} element={route.element} path={route.path} />
-              ))}
-            </Route>
-            {publicRoutes.map((route) => (
+        <Routes>
+          <Route element={<PrivateRoutes />}>
+            {protectedRoutes.map((route) => (
               <Route key={route.path} element={route.element} path={route.path} />
             ))}
-          </Routes>
-        </Suspense>
+          </Route>
+          {publicRoutes.map((route) => (
+            <Route key={route.path} element={route.element} path={route.path} />
+          ))}
+        </Routes>
       </Router>
     </QueryClientProvider>
   );

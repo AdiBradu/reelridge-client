@@ -1,15 +1,18 @@
 import { Fragment, useEffect, lazy, Suspense } from 'react';
 // components
+// import { MemoizedPoster } from '../Poster/Poster';
+import { MemoizedMovie } from '../Movie/Movie';
+// import { MemoizedPostersSlider } from '../PostersSliders/PostersSlider';
 const MemoizedPoster = lazy(() =>
   import('../Poster/Poster').then(({ MemoizedPoster }) => ({
     default: MemoizedPoster,
   })),
 );
-const MemoizedMovie = lazy(() =>
-  import('../Movie/Movie').then(({ MemoizedMovie }) => ({
-    default: MemoizedMovie,
-  })),
-);
+// const MemoizedMovie = lazy(() =>
+//   import('../Movie/Movie').then(({ MemoizedMovie }) => ({
+//     default: MemoizedMovie,
+//   })),
+// );
 const MemoizedPostersSlider = lazy(() =>
   import('../PostersSliders/PostersSlider').then(({ MemoizedPostersSlider }) => ({
     default: MemoizedPostersSlider,
