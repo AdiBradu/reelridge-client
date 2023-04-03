@@ -33,12 +33,6 @@ const Overlay = styled(Box)(() => ({
   background: `linear-gradient(218.23deg, rgba(32, 31, 36, 0.4) 0%, rgba(32, 31, 36, 0) 100%), linear-gradient(270deg, rgba(32, 31, 36, 0.2) 0%, #201F24 100%), linear-gradient(180deg, rgba(32, 31, 36, 0.2) 0%, #201F24 97.97%)`,
 }));
 
-// const StyledImage = styled('img')(() => ({
-//   objectFit: 'cover',
-//   background: `linear-gradient(218.23deg, rgba(32, 31, 36, 0.4) 0%, rgba(32, 31, 36, 0) 100%), linear-gradient(270deg, rgba(32, 31, 36, 0.2) 0%, #201F24 100%), linear-gradient(180deg, rgba(32, 31, 36, 0.2) 0%, #201F24 97.97%)`,
-//   backgroundBlendMode: 'normal',
-// }));
-
 const base_url = 'https://image.tmdb.org/t/p/';
 const poster_size = 'w500/';
 

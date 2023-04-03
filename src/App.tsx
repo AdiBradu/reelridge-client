@@ -1,4 +1,6 @@
 import { Suspense } from 'react';
+// components
+import { Spinner } from './components/Spinner/Spinner';
 // routing
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PrivateRoutes } from './routes/PrivateRoutes';
@@ -6,7 +8,7 @@ import { protectedRoutes, publicRoutes } from './routes/routes';
 // react query
 import { QueryClient, QueryClientProvider } from 'react-query';
 // styles
-import './styles/reset.css';
+import './styles/main.css';
 import 'swiper/css';
 import './components/PostersSliders/postersSliders.css';
 
@@ -16,7 +18,7 @@ export const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <Suspense fallback={<p>loading</p>}>
+        <Suspense fallback={<Spinner />}>
           <Routes>
             <Route element={<PrivateRoutes />}>
               {protectedRoutes.map((route) => (
