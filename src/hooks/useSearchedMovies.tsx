@@ -1,6 +1,6 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo } from 'react';
 // redux
-import { useAppDispatch, useAppSelector } from '../api/hooks/hooks';
+import { useAppSelector } from '../api/hooks/hooks';
 // api
 import {
   setActiveSlideSearchedMovies,
@@ -8,32 +8,30 @@ import {
 } from '../api/features/movie/movieSlice';
 // hooks
 import { useMovie } from './useMovie';
+import { useActiveSlide } from './useActiveSlide';
+import { usePageNumber } from './usePageNumber';
+// models
+import { MovieModel } from '../models/MovieModel';
 
 export const useSearchedMovies = () => {
   console.log('useSearchedMovies render');
-
-  const dispatch = useAppDispatch();
   const { searchedMovies } = useAppSelector((state) => state.search);
   const { activeSlideSearchedMovies } = useAppSelector((state) => state.movie);
   const { pageNumberSearchedMovies } = useAppSelector((state) => state.movie);
   const { searchQuery } = useAppSelector((state) => state.search);
-
-  const movies = useMemo(() => searchedMovies, [searchedMovies]);
-  const searchQueryMemo = useMemo(() => searchQuery, [searchQuery]);
-  const pageNumber = useMemo(() => pageNumberSearchedMovies, [pageNumberSearchedMovies]);
-  const activeSlide = useMemo(
-    () => activeSlideSearchedMovies,
-    [activeSlideSearchedMovies],
+  const movies = useMemo(
+    () => searchedMovies.map((movie) => new MovieModel(movie)),
+    [searchedMovies],
   );
-
-  const handleActiveSlide = useCallback((index: number) => {
-    dispatch(setActiveSlideSearchedMovies(index));
-  }, []);
-
-  const handlePageNumber = useCallback((pageNumber: number) => {
-    dispatch(setPageNumberSearchedMovies(pageNumber));
-  }, []);
-
+  const searchQueryMemo = useMemo(() => searchQuery, [searchQuery]);
+  const { activeSlide, handleActiveSlide } = useActiveSlide(
+    activeSlideSearchedMovies,
+    setActiveSlideSearchedMovies,
+  );
+  const { pageNumber, handlePageNumber } = usePageNumber(
+    pageNumberSearchedMovies,
+    setPageNumberSearchedMovies,
+  );
   const movie = useMovie(movies, activeSlide);
 
   return {

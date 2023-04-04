@@ -36,10 +36,10 @@ export const addToWatchLater = async (
 };
 
 export const removeFromWatchLater = async (
-  movieId: number,
+  id: number | undefined,
 ): Promise<UpcomingProps | undefined> => {
   try {
-    if (movieId) {
+    if (id) {
       const response = await axios.delete(`http://localhost:5050/watchlater`, {
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export const removeFromWatchLater = async (
           Authorization: `token ${sessionStorage.getItem('token')}`,
         },
         data: {
-          movieId: movieId,
+          movieId: id,
         },
       });
       return response.data;

@@ -4,8 +4,8 @@ import { Box } from '@mui/material';
 import { styled } from '@mui/system';
 // components
 import { Body } from '../../Typography/Body';
-// router
-import { useLocation } from 'react-router-dom';
+// hooks
+import { usePagePathname } from '../../../hooks/usePagePathname';
 // types
 import { ButtonLoadMoreProps } from '../../../types/types';
 
@@ -21,11 +21,11 @@ export const ButtonLoadMore: React.FC<ButtonLoadMoreProps> = ({
   pageNumber,
   handlePageNumber,
 }) => {
-  const location = useLocation();
+  const { isPagePathname } = usePagePathname('/watchlater');
 
   return (
     <Fragment>
-      {location.pathname !== '/watchlater' && pageNumber && (
+      {!isPagePathname && pageNumber && (
         <StyledBox
           className="mySwiperSlide"
           onClick={() => handlePageNumber?.(pageNumber)}

@@ -1,5 +1,3 @@
-// types
-import { UpcomingProps } from '../types/types';
 // redux
 import { useAppSelector, useAppDispatch } from '../api/hooks/hooks';
 // react query
@@ -8,28 +6,28 @@ import { useMutation } from 'react-query';
 import { removeFromWatchLater } from '../api/features/watchlater/index';
 import { setWatchLaterMovies } from '../api/features/watchlater/watchLaterSlice';
 import { setActiveSlideWatchLaterMovies } from '../api/features/movie/movieSlice';
+// utils
+import { filterMoviesById, filterMoviesByIndex } from '../utils/utils';
 
 export const useRemoveFromWatchLater = () => {
   console.log('useRemoveFromWatchLater render');
-
   const dispatch = useAppDispatch();
   const { activeSlideWatchLaterMovies } = useAppSelector((state) => state.movie);
   const { watchLaterMovies } = useAppSelector((state) => state.watchlater);
-
-  const removeFromWatchLaterMutation = useMutation((movie: number) =>
-    removeFromWatchLater(movie),
+  const removeFromWatchLaterMutation = useMutation((id: number | undefined) =>
+    removeFromWatchLater(id),
   );
 
-  const handleRemoveFromWatchLater = () => {
-    const newMovie = watchLaterMovies?.filter(
-      (movie) => watchLaterMovies.indexOf(movie) === activeSlideWatchLaterMovies,
-    );
+  const handleRemoveFromWatchLater = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
 
-    removeFromWatchLaterMutation.mutate(newMovie[0].id);
+    const id = filterMoviesByIndex(watchLaterMovies, activeSlideWatchLaterMovies);
 
-    const filteredMovies = watchLaterMovies.filter(
-      (movie: UpcomingProps) =>
-        movie.id !== watchLaterMovies[activeSlideWatchLaterMovies].id,
+    removeFromWatchLaterMutation.mutate(id);
+
+    const filteredMovies = filterMoviesById(
+      watchLaterMovies,
+      activeSlideWatchLaterMovies,
     );
 
     dispatch(setWatchLaterMovies(filteredMovies));

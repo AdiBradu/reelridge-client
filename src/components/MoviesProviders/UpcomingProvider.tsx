@@ -26,11 +26,9 @@ import { dataNotIncluded } from '../../utils/utils';
 
 export const UpcomingProvider: React.FC = () => {
   console.log('Upcoming Provider render');
-
   const dispatch = useAppDispatch();
   const { movie, movies, activeSlide, handleActiveSlide, pageNumber, handlePageNumber } =
     useUpcomingMovies();
-
   const { isLoading, error, data, refetch } = useQuery(
     ['upcomingMovies', pageNumber],
     () => getUpcomingMovies(pageNumber),
@@ -38,8 +36,6 @@ export const UpcomingProvider: React.FC = () => {
       staleTime: 60000,
     },
   );
-
-  console.log(data);
 
   useEffect(() => {
     data && dataNotIncluded(movies, data) && dispatch(setUpcomingMovies(data));

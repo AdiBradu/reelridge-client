@@ -12,6 +12,8 @@ import { MovieProps } from '../../types/types';
 // utils
 import { roundToOneDecimalPlace } from '../../utils/utils';
 import { transformNumberOverFourDigits } from '../../utils/utils';
+// models
+import { MovieModel } from '../../models/MovieModel';
 
 const MovieWrapper = styled(Stack)(({ theme }) => ({
   maxWidth: '640px',
@@ -40,36 +42,27 @@ const HeaderBodyInfo = styled(Stack)(() => ({
 
 export const Movie: React.FC<MovieProps> = ({ movie }) => {
   console.log('Movie Render');
+
   return (
     <MovieWrapper>
       <Header>
-        <Heading2 text={movie?.title ? movie.title : 'No Title Provided'} />
+        <Heading2 text={movie.title} />
         <HeaderBody>
           <HeaderBodyInfo>
-            <Heading3
-              text={movie?.release_date ? movie.release_date.toString() : 'Unknown'}
-            />
+            <Heading3 text={movie.release_date} />
             <Caption text={'release date'} />
           </HeaderBodyInfo>
           <HeaderBodyInfo>
-            <Heading3 text={movie?.rating ? roundToOneDecimalPlace(movie.rating) : 0} />
+            <Heading3 text={roundToOneDecimalPlace(movie.rating)} />
             <Caption text={'rating'} />
           </HeaderBodyInfo>
           <HeaderBodyInfo>
-            <Heading3
-              text={movie?.votes ? transformNumberOverFourDigits(movie.votes) : 0}
-            />
+            <Heading3 text={transformNumberOverFourDigits(movie.votes)} />
             <Caption text={'votes'} />
           </HeaderBodyInfo>
         </HeaderBody>
       </Header>
-      <Body
-        text={
-          movie?.overview
-            ? movie.overview
-            : 'Coming soon: a thrilling new movie that will keep you on the edge of your seat! Stay tuned for more information about this pulse-pounding adventure. Generated with chatGPT.'
-        }
-      />
+      <Body text={movie.overview} />
     </MovieWrapper>
   );
 };

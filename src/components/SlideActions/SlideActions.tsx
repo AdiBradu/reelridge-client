@@ -9,8 +9,8 @@ import { Stack } from '@mui/material';
 import { styled } from '@mui/system';
 // redux
 import { useAppSelector } from '../../api/hooks/hooks';
-// router
-import { useLocation } from 'react-router-dom';
+// hooks
+import { usePagePathname } from '../../hooks/usePagePathname';
 // types
 import { MovieProps } from '../../types/types';
 // utils
@@ -37,21 +37,19 @@ const Actions = styled(Stack)(({ theme }) => ({
 
 export const SlideActions: React.FC<MovieProps> = ({ movie }) => {
   console.log('SlideActions render');
-
   const { isLoggedIn } = useAppSelector((state) => state.auth);
   const { watchLaterMovies } = useAppSelector((state) => state.watchlater);
-  const location = useLocation();
-  const isWatchlaterPage = location.pathname === '/watchlater';
+  const { isPagePathname } = usePagePathname('/watchlater');
   const titles = watchLaterMovies.map((movie) => movie.title);
 
   return (
     <ActionsWrapper className="hovered">
       <Actions>
-        {isLoggedIn && !isWatchlaterPage && !includesTitle(titles, movie?.title) ? (
+        {isLoggedIn && !isPagePathname && !includesTitle(titles, movie?.title) ? (
           <MemoizedButtonAdd movie={movie} />
-        ) : isLoggedIn && isWatchlaterPage ? (
+        ) : isLoggedIn && isPagePathname ? (
           <MemoizedButtonRemove />
-        ) : isLoggedIn && !isWatchlaterPage && includesTitle(titles, movie?.title) ? (
+        ) : isLoggedIn && !isPagePathname && includesTitle(titles, movie?.title) ? (
           <Caption text={'saved'} />
         ) : (
           <MemoizedButtonLoginSlideAction />

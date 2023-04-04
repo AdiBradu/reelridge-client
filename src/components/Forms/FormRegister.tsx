@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Input } from '../Input/Input';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { MemoizedButtonForm } from '../Buttons/ButtonLogin/ButtonForm';
+import { Status } from '../Status/Status';
 // material ui
 import { Box, Typography, Stack, Link } from '@mui/material';
 import { styled } from '@mui/system';
@@ -77,15 +78,9 @@ export const FormRegister: React.FC = () => {
       <form onSubmit={handleregister}>
         <FormBody>
           {error instanceof Error && (
-            <Typography variant="body1" color={theme.palette.error.light}>
-              {error.message}
-            </Typography>
+            <Status text={error.message} color={theme.palette.error.light} />
           )}
-          {data && (
-            <Typography variant="body1" color={theme.palette.success.light}>
-              {data.message}
-            </Typography>
-          )}
+          {data && <Status text={data.message} color={theme.palette.success.light} />}
           <FormBodyInputs>
             <Input
               label="username"

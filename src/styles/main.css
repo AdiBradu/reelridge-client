@@ -159,7 +159,7 @@ img.poster {
   background-blend-mode: normal;
 }
 .animatePoster {
-  animation: fadeIn ease 0.5s;
+  animation: fadeIn ease-in 0.5s;
 }
 @keyframes fadeIn {
   0% {

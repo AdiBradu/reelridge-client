@@ -1,7 +1,5 @@
-import React, { MutableRefObject } from 'react';
-import SwiperCore from 'swiper';
+import React from 'react';
 // material ui
-// import { Butt } from '@mui/system';
 import { ButtonProps } from '@mui/material';
 
 export interface Routes {
@@ -32,7 +30,7 @@ export interface MenuItemProps {
 }
 
 export interface UpcomingProps {
-  id: number;
+  id: number | undefined;
   title?: string | undefined;
   release_date?: string | undefined;
   image_path?: string | undefined;

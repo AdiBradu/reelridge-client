@@ -10,11 +10,6 @@ import { UpcomingProps, PostersSliderProps } from '../../types/types';
 // hooks
 import { useSwiperNavigation } from '../../hooks/useSwiperNavigation';
 import { usePosterAnimation } from '../../hooks/usePosterAnimation';
-// assets
-import tmdb from '../../assets/images/tmdb.jpg';
-
-const base_url = 'https://image.tmdb.org/t/p/';
-const poster_size = 'w500/';
 
 export const PostersSlider: React.FC<PostersSliderProps> = ({
   movies,
@@ -67,7 +62,7 @@ export const PostersSlider: React.FC<PostersSliderProps> = ({
       />
       {movies?.map((movie: UpcomingProps, index: number) => (
         <SwiperSlide
-          key={`${movie.title} ${index}`}
+          key={`${movie.title}-${index}`}
           className={'mySwiperSlide'}
           onClick={() => {
             handleActiveSlide?.(index);
@@ -76,11 +71,7 @@ export const PostersSlider: React.FC<PostersSliderProps> = ({
         >
           {activeSlide === index && <MemoizedSlideActions movie={movie} />}
           <img
-            src={
-              movie.image_path
-                ? `${base_url}${poster_size}/${movie.image_path}`
-                : `${tmdb}`
-            }
+            src={movie.image_path}
             alt={movie.title}
             width={'100%'}
             height={'100%'}

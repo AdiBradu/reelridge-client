@@ -16,13 +16,11 @@ export const ButtonRemove: React.FC = () => {
   console.log('ButtonRemove render');
   const { handleRemoveFromWatchLater } = useRemoveFromWatchLater();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    handleRemoveFromWatchLater();
-  };
-
   return (
-    <Button onClick={(event) => handleClick(event)} aria-label={'Remove movie'}>
+    <Button
+      onClick={(event) => handleRemoveFromWatchLater(event)}
+      aria-label={'Remove movie'}
+    >
       <RemoveItem />
       <Caption text={'remove movie'} />
     </Button>

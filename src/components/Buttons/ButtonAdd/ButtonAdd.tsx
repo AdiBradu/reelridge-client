@@ -5,15 +5,10 @@ import { Caption } from '../../Typography/Caption';
 import { Button } from '@mui/material';
 import { styled } from '@mui/system';
 import AddIcon from '@mui/icons-material/Add';
-// redux
-import { useAppDispatch } from '../../../api/hooks/hooks';
-// react query
-import { useMutation } from 'react-query';
-// api
-import { addToWatchLater } from '../../../api/features/watchlater/index';
-import { appendWatchLaterMovie } from '../../../api/features/watchlater/watchLaterSlice';
 // types
-import { UpcomingProps, MovieProps } from '../../../types/types';
+import { MovieProps } from '../../../types/types';
+// hooks
+import { useAddToWatchLater } from '../../../hooks/useAddToWatchLater';
 
 const AddItem = styled(AddIcon)(({ theme }) => ({
   color: theme.palette.primary.main100,
@@ -21,15 +16,7 @@ const AddItem = styled(AddIcon)(({ theme }) => ({
 
 export const ButtonAdd: React.FC<MovieProps> = ({ movie }) => {
   console.log('ButtonAdd render');
-  const dispatch = useAppDispatch();
-  const addToWatchLaterMutation = useMutation((movie: UpcomingProps) =>
-    addToWatchLater(movie),
-  );
-
-  const handleAddToWatchLater = () => {
-    addToWatchLaterMutation.mutate(movie);
-    dispatch(appendWatchLaterMovie(movie));
-  };
+  const { handleAddToWatchLater } = useAddToWatchLater(movie);
 
   return (
     <Button onClick={() => handleAddToWatchLater()} aria-label={'Add movie'}>
