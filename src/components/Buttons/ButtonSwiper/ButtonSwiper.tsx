@@ -6,8 +6,6 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import theme from '../../../styles/theme';
 // types
 import { ButtonSwiperProps } from '../../../types/types';
-// hooks
-import { usePosterAnimation } from '../../../hooks/usePosterAnimation';
 
 interface ButtonDirectionProps extends ButtonProps {
   direction: 'left' | 'right';
@@ -45,19 +43,13 @@ export const ButtonSwiper: React.FC<ButtonSwiperProps> = ({
   handleSwiperNavigation,
 }) => {
   const mobile = useMediaQuery(theme.breakpoints.down('lg'));
-  const { handleAnimation } = usePosterAnimation();
-
-  const handleClick = () => {
-    handleSwiperNavigation(direction);
-    handleAnimation();
-  };
 
   return (
     <>
       {!mobile && (
         <ButtonDirection
           direction={direction}
-          onClick={() => handleClick()}
+          onClick={() => handleSwiperNavigation(direction)}
           aria-label={`Slide ${direction}`}
           id={`swiperButton${direction}`}
         >

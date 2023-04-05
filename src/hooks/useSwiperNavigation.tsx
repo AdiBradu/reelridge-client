@@ -3,10 +3,13 @@ import { useEffect, useRef } from 'react';
 import SwiperCore from 'swiper';
 // react swipeable
 import { useSwipeable } from 'react-swipeable';
+// hooks
+import { usePosterAnimation } from './usePosterAnimation';
 
 export const useSwiperNavigation = () => {
   console.log('useSwiperNavigation render');
   const swiperRef = useRef<SwiperCore>();
+  const { handleAnimation } = usePosterAnimation();
 
   const handleSwiperNavigation = (direction: string) => {
     direction === 'left'
@@ -21,6 +24,7 @@ export const useSwiperNavigation = () => {
 
   useEffect(() => {
     ref(document);
+    handleAnimation();
   });
 
   return { swiperRef, handleSwiperNavigation };
