@@ -11,7 +11,7 @@ import { Caption } from '../Typography/Caption';
 import { MovieProps } from '../../types/types';
 // utils
 import { roundToOneDecimalPlace } from '../../utils/utils';
-import { transformNumberOverFourDigits } from '../../utils/utils';
+import { transformFourDigitNumbers } from '../../utils/utils';
 
 const MovieWrapper = styled(Stack)(({ theme }) => ({
   maxWidth: '640px',
@@ -55,7 +55,7 @@ export const Movie: React.FC<MovieProps> = ({ movie }) => {
             <Caption text={'rating'} />
           </HeaderBodyInfo>
           <HeaderBodyInfo>
-            <Heading3 text={transformNumberOverFourDigits(movie.votes)} />
+            <Heading3 text={transformFourDigitNumbers(movie.votes)} />
             <Caption text={'votes'} />
           </HeaderBodyInfo>
         </HeaderBody>
