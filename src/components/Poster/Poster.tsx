@@ -39,8 +39,8 @@ export const Poster: React.FC<MovieProps> = ({ movie }) => {
       <Overlay />
       <img
         className={'poster'}
-        src={movie?.image_path}
-        alt={movie?.title}
+        src={movie.image_path}
+        alt={movie.title}
         width={'100%'}
         height={'100%'}
         id={'poster'}

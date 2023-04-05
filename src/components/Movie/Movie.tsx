@@ -12,8 +12,6 @@ import { MovieProps } from '../../types/types';
 // utils
 import { roundToOneDecimalPlace } from '../../utils/utils';
 import { transformNumberOverFourDigits } from '../../utils/utils';
-// models
-import { MovieModel } from '../../models/MovieModel';
 
 const MovieWrapper = styled(Stack)(({ theme }) => ({
   maxWidth: '640px',

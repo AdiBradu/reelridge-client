@@ -2,7 +2,6 @@
 import { LayoutPage } from '../../layouts/LayoutPage';
 import { LayoutDefault } from '../../layouts/LayoutDefault';
 import { SectionTitle } from '../../components/Typography/SectionTitle';
-import { Spinner } from '../../components/Spinner/Spinner';
 import { MemoizedNavbar } from '../../components/Navigation/Navbar/Navbar';
 import { UpcomingProvider } from '../../components/MoviesProviders/UpcomingProvider';
 
