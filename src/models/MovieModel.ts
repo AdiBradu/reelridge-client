@@ -4,7 +4,7 @@ import { UpcomingProps } from '../types/types';
 import tmdb from '../assets/images/tmdb.jpg';
 
 const base_url = 'https://image.tmdb.org/t/p/';
-const poster_size = 'w500/';
+const poster_size = 'w500';
 
 export class MovieModel {
   id: number | undefined;
@@ -20,7 +20,7 @@ export class MovieModel {
     this.title = movie?.title ? movie.title : 'No Title Provided';
     this.release_date = movie?.release_date ? movie.release_date : 'Unknown';
     this.image_path = movie?.image_path
-      ? `${base_url}${poster_size}/${movie.image_path}`
+      ? `${base_url}${poster_size}${movie.image_path}`
       : `${tmdb}`;
     this.overview = movie?.overview
       ? movie.overview

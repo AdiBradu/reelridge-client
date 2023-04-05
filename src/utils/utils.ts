@@ -7,7 +7,7 @@ export const roundToOneDecimalPlace = (input: number | string | undefined) => {
   } else return;
 };
 
-// transform number with and over 4 digits into pattern X.Xk. E.g. 1294 => 1.3k
+// transform number with and over 3 digits into pattern X.Xk. E.g. 1294 => 1.3k
 export const transformNumberOverFourDigits = (input: number | string | undefined) => {
   if (input) {
     const number = Number(input);
