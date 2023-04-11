@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 // components
 import { Input } from '../Input/Input';
 import { Spinner } from '../../components/Spinner/Spinner';
@@ -8,14 +7,8 @@ import { Status } from '../Status/Status';
 import { Box, Typography, Stack, Link } from '@mui/material';
 import { styled } from '@mui/system';
 import theme from '../../styles/theme';
-// types
-import { UserRegistrationProps } from '../../types/types';
-// react query
-import { useMutation } from 'react-query';
-// api
-import { registerUser } from '../../api/features/auth';
-// routing
-import { useNavigate } from 'react-router-dom';
+// hooks
+import { useFormRegister } from '../../hooks/useFormRegister';
 
 const StyledForm = styled(Box)(() => ({
   maxWidth: '400px',
@@ -40,36 +33,8 @@ const FormFooterText = styled(Typography)(({ theme }) => ({
 
 export const FormRegister: React.FC = () => {
   console.log('Form Register render');
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState<UserRegistrationProps>({
-    username: '',
-    email: '',
-    password: '',
-  });
-
-  const {
-    mutate: registerUserMutation,
-    data,
-    isLoading,
-    error,
-  } = useMutation((formData: UserRegistrationProps) => registerUser(formData));
-
-  const handleregister = () => {
-    registerUserMutation(formData);
-  };
-
-  const handleChangeFormData = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ): void => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
-
-  useEffect(() => {
-    data && setTimeout(() => navigate('/login'), 3000);
-  }, [data]);
+  const { data, isLoading, error, formData, handleChangeFormData, handleregister } =
+    useFormRegister();
 
   if (isLoading) return <Spinner />;
 

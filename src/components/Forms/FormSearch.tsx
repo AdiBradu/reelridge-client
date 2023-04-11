@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 // components
 import { Input } from '../Input/Input';
 import { Spinner } from '../../components/Spinner/Spinner';
@@ -8,15 +7,8 @@ import { MemoizedButtonForm } from '../Buttons/ButtonLogin/ButtonForm';
 import { Box, Stack } from '@mui/material';
 import { styled } from '@mui/system';
 import theme from '../../styles/theme';
-// react query
-import { useMutation } from 'react-query';
-// api
-import { searchMovie } from '../../api/features/search';
-import { setSearchedMovies, setSearchQuery } from '../../api/features/search/searchSlice';
-// redux
-import { useAppDispatch } from '../../api/hooks/hooks';
 // hooks
-import { useSearchedMovies } from '../../hooks/useSearchedMovies';
+import { useFormSearch } from '../../hooks/useFormSearch';
 
 const StyledForm = styled(Box)(() => ({
   maxWidth: '400px',
@@ -36,42 +28,7 @@ const FormBodyFooter = styled(Stack)(() => ({
 
 export const FormSearch: React.FC = () => {
   console.log('FormSearch render');
-  const dispatch = useAppDispatch();
-  const { pageNumber, movies, searchQueryMemo, handleActiveSlide } = useSearchedMovies();
-  const [query, setQuery] = useState(searchQueryMemo);
-
-  const {
-    mutate: searchMovieMutation,
-    data,
-    isLoading,
-    error,
-  } = useMutation((search: { query: string; pageNumber: number }) => searchMovie(search));
-
-  const handleChangeQuery = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ): void => {
-    setQuery(event.target.value);
-  };
-
-  const handleSearch = (event: React.ChangeEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (searchQueryMemo !== query && movies[0]) {
-      dispatch(setSearchedMovies([]));
-      handleActiveSlide(0);
-    }
-    if (searchQueryMemo !== query) {
-      searchMovieMutation({ query, pageNumber });
-      dispatch(setSearchQuery(query));
-    }
-  };
-
-  useEffect(() => {
-    data && dispatch(setSearchedMovies([...movies, ...data]));
-  }, [data]);
-
-  useEffect(() => {
-    searchMovieMutation({ query, pageNumber });
-  }, [pageNumber]);
+  const { isLoading, error, query, handleChangeQuery, handleSearch } = useFormSearch();
 
   if (isLoading) return <Spinner />;
 

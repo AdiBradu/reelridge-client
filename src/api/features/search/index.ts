@@ -1,4 +1,7 @@
 import axios from 'axios';
+// models
+import { MovieModel } from '../../../models/MovieModel';
+import { UpcomingProps } from '../../../types/types';
 
 export const searchMovie = async (search: { query: string; pageNumber: number }) => {
   try {
@@ -12,7 +15,7 @@ export const searchMovie = async (search: { query: string; pageNumber: number })
         page: search.pageNumber,
       },
     });
-    return response.data;
+    return response.data.map((movie: UpcomingProps) => new MovieModel(movie));
   } catch (error) {
     console.error(error);
   }

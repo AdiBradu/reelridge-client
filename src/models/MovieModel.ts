@@ -3,9 +3,6 @@ import { UpcomingProps } from '../types/types';
 // assets
 import tmdb from '../assets/images/tmdb.jpg';
 
-const base_url = 'https://image.tmdb.org/t/p/';
-const poster_size = 'w500';
-
 export class MovieModel {
   id: number | undefined;
   title: string | undefined;
@@ -20,8 +17,8 @@ export class MovieModel {
     this.title = movie?.title ? movie.title : 'No Title Provided';
     this.release_date = movie?.release_date ? movie.release_date : 'Unknown';
     this.image_path = movie?.image_path
-      ? `${base_url}${poster_size}${movie.image_path}`
-      : `${tmdb}`;
+      ? `https://image.tmdb.org/t/p/w500${movie.image_path}`
+      : `http://localhost:5173/${tmdb}`;
     this.overview = movie?.overview
       ? movie.overview
       : 'Coming soon: a thrilling new movie that will keep you on the edge of your seat! Stay tuned for more information about this pulse-pounding adventure. Generated with chatGPT.';

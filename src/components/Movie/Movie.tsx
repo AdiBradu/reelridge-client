@@ -44,23 +44,23 @@ export const Movie: React.FC<MovieProps> = ({ movie }) => {
   return (
     <MovieWrapper>
       <Header>
-        <Heading2 text={movie.title} />
+        <Heading2 text={movie?.title} />
         <HeaderBody>
           <HeaderBodyInfo>
-            <Heading3 text={movie.release_date} />
+            <Heading3 text={movie?.release_date} />
             <Caption text={'release date'} />
           </HeaderBodyInfo>
           <HeaderBodyInfo>
-            <Heading3 text={roundToOneDecimalPlace(movie.rating)} />
+            <Heading3 text={roundToOneDecimalPlace(movie?.rating)} />
             <Caption text={'rating'} />
           </HeaderBodyInfo>
           <HeaderBodyInfo>
-            <Heading3 text={transformFourDigitNumbers(movie.votes)} />
+            <Heading3 text={transformFourDigitNumbers(movie?.votes)} />
             <Caption text={'votes'} />
           </HeaderBodyInfo>
         </HeaderBody>
       </Header>
-      <Body text={movie.overview} />
+      <Body text={movie?.overview} />
     </MovieWrapper>
   );
 };

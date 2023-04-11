@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 // components
 import { Input } from '../Input/Input';
 import { Spinner } from '../../components/Spinner/Spinner';
@@ -8,17 +7,8 @@ import { MemoizedButtonForm } from '../Buttons/ButtonLogin/ButtonForm';
 import { Box, Typography, Stack, Link } from '@mui/material';
 import { styled } from '@mui/system';
 import theme from '../../styles/theme';
-// types
-import { UserLoginProps } from '../../types/types';
-// redux
-import { useAppDispatch } from '../../api/hooks/hooks';
-import { setLoginUser, setUserName } from '../../api/features/auth/authSlice';
-// routing
-import { useNavigate } from 'react-router-dom';
-// react query
-import { useMutation } from 'react-query';
-// api
-import { loginUser } from '../../api/features/auth';
+// hooks
+import { useFormLogin } from '../../hooks/useFormLogin';
 
 const StyledForm = styled(Box)(() => ({
   maxWidth: '400px',
@@ -43,44 +33,8 @@ const FormFooterText = styled(Typography)(({ theme }) => ({
 
 export const FormLogin: React.FC = () => {
   console.log('Form Login render');
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState<UserLoginProps>({
-    email: '',
-    password: '',
-  });
-
-  const {
-    mutate: loginUserMutation,
-    data,
-    isLoading,
-    error,
-  } = useMutation((formData: UserLoginProps) => loginUser(formData));
-
-  const handleLogin = () => {
-    loginUserMutation(formData);
-  };
-
-  const handleChangeFormData = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ): void => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
-
-  useEffect(() => {
-    if (data) {
-      sessionStorage.setItem('token', data.token);
-      sessionStorage.setItem('user', data.id);
-      dispatch(setLoginUser());
-      dispatch(setUserName(data.username));
-      setTimeout(() => {
-        navigate('/watchlater');
-      }, 1500);
-    }
-  }, [data]);
+  const { isLoading, error, data, formData, handleChangeFormData, handleLogin } =
+    useFormLogin();
 
   if (isLoading) return <Spinner />;
 

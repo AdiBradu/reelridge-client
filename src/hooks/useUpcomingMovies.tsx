@@ -10,8 +10,6 @@ import {
 import { useMovie } from './useMovie';
 import { useActiveSlide } from './useActiveSlide';
 import { usePageNumber } from './usePageNumber';
-// models
-import { MovieModel } from '../models/MovieModel';
 // react-query
 import { useQuery } from 'react-query';
 // api
@@ -29,10 +27,7 @@ export const useUpcomingMovies = () => {
   const { activeSlideUpcomingMovies } = useAppSelector((state) => state.movie);
   const { pageNumberUpcomingMovies } = useAppSelector((state) => state.movie);
 
-  const movies = useMemo(
-    () => upcomingMovies.map((movie) => new MovieModel(movie)),
-    [upcomingMovies],
-  );
+  const movies = useMemo(() => upcomingMovies, [upcomingMovies]);
   const { activeSlide, handleActiveSlide } = useActiveSlide(
     activeSlideUpcomingMovies,
     setActiveSlideUpcomingMovies,

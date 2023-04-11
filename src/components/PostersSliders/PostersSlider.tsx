@@ -62,7 +62,7 @@ export const PostersSlider: React.FC<PostersSliderProps> = ({
       />
       {movies?.map((movie: UpcomingProps, index: number) => (
         <SwiperSlide
-          key={`${movie.title}-${index}`}
+          key={`${movie?.title}-${index}`}
           className={'mySwiperSlide'}
           onClick={() => {
             handleActiveSlide?.(index);
@@ -71,8 +71,8 @@ export const PostersSlider: React.FC<PostersSliderProps> = ({
         >
           {activeSlide === index && <MemoizedSlideActions movie={movie} />}
           <img
-            src={movie.image_path}
-            alt={movie.title}
+            src={movie?.image_path}
+            alt={movie?.title}
             width={'100%'}
             height={'100%'}
             loading={'lazy'}

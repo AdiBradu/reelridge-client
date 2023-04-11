@@ -10,8 +10,6 @@ import {
 import { useMovie } from './useMovie';
 import { useActiveSlide } from './useActiveSlide';
 import { usePageNumber } from './usePageNumber';
-// models
-import { MovieModel } from '../models/MovieModel';
 
 export const useSearchedMovies = () => {
   console.log('useSearchedMovies render');
@@ -19,10 +17,8 @@ export const useSearchedMovies = () => {
   const { activeSlideSearchedMovies } = useAppSelector((state) => state.movie);
   const { pageNumberSearchedMovies } = useAppSelector((state) => state.movie);
   const { searchQuery } = useAppSelector((state) => state.search);
-  const movies = useMemo(
-    () => searchedMovies.map((movie) => new MovieModel(movie)),
-    [searchedMovies],
-  );
+  const movies = useMemo(() => searchedMovies, [searchedMovies]);
+
   const searchQueryMemo = useMemo(() => searchQuery, [searchQuery]);
   const { activeSlide, handleActiveSlide } = useActiveSlide(
     activeSlideSearchedMovies,

@@ -15,7 +15,7 @@ export const transformFourDigitNumbers = (input: number | string | undefined) =>
     if (length < 4) {
       return number;
     } else {
-      const toBeDividedWith = Number('1'.padEnd(length, '0'));
+      const toBeDividedWith = Number('1'.padEnd(length - (length - 4), '0'));
       return `${Math.round((number / toBeDividedWith) * 10) / 10}k`;
     }
   } else return;

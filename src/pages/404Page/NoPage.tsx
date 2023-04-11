@@ -1,3 +1,3 @@
-export const NoPage = () => {
+export const NoPage: React.FC = () => {
   return <div>NoPage</div>;
 };
