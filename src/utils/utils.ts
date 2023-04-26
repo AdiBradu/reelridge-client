@@ -1,4 +1,5 @@
 import { UpcomingProps } from '../types/types';
+
 // Round a number to one decimal place
 export const roundToOneDecimalPlace = (input: number | string | undefined) => {
   if (input) {

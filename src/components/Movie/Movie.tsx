@@ -39,7 +39,7 @@ const HeaderBodyInfo = styled(Stack)(() => ({
 }));
 
 export const Movie: React.FC<MovieProps> = ({ movie }) => {
-  console.log('Movie Render');
+  console.log('Movie Render', movie);
 
   return (
     <MovieWrapper>

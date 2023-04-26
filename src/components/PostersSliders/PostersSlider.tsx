@@ -18,7 +18,7 @@ export const PostersSlider: React.FC<PostersSliderProps> = ({
   pageNumber,
   handlePageNumber,
 }) => {
-  console.log('Posters Slider render');
+  console.log('Posters Slider render', movies);
   const { swiperRef, handleSwiperNavigation } = useSwiperNavigation();
   const { handleAnimation } = usePosterAnimation();
 

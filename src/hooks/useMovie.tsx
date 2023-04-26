@@ -5,7 +5,7 @@ import { UpcomingProps } from '../types/types';
 export const useMovie = (movies: UpcomingProps[], activeSlide: number) => {
   console.log('useMovie render');
   const [movieState, setMovieState] = useState(movies[activeSlide]);
-  console.log(movieState);
+
   useEffect(() => {
     const currentMovie = movies?.filter(
       (movie) => movies.indexOf(movie) === activeSlide,

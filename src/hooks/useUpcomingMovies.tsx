@@ -22,6 +22,7 @@ import { useAppDispatch } from '../api/hooks/hooks';
 
 export const useUpcomingMovies = () => {
   console.log('useUpcomingMovies render');
+
   const dispatch = useAppDispatch();
   const { upcomingMovies } = useAppSelector((state) => state.upcoming);
   const { activeSlideUpcomingMovies } = useAppSelector((state) => state.movie);
